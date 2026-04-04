@@ -3,122 +3,672 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💖 Sen uchun 💖</title>
+    <title>GulduBaza | Universitet Tizimi</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+        }
+
+        /* Login sahifasi */
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: Arial;
-            overflow-x: hidden;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        .card {
-            background: white;
-            padding: 50px;
-            border-radius: 50px;
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-logo {
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            max-width: 500px;
-            margin: 20px;
+            margin-bottom: 30px;
         }
-        .heart {
-            font-size: 80px;
-            animation: beat 1s infinite;
-            display: inline-block;
+
+        .login-logo h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        @keyframes beat {
-            0%,100%{transform:scale(1);}
-            50%{transform:scale(1.2);}
+
+        .login-logo p {
+            color: #666;
+            margin-top: 10px;
         }
-        h1 {
-            color: #ff3366;
+
+        .login-type {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 15px;
         }
-        button {
-            background: #ff3366;
+
+        .login-type-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+        .login-type-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .login-card input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            margin: 10px;
-            border-radius: 30px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .error-msg {
+            background: linear-gradient(135deg, #feb2b2 0%, #fc8181 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            font-weight: 500;
+        }
+
+        /* Admin panel */
+        .admin-container, .student-container {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8em;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f7fafc;
+            padding: 10px 20px;
+            border-radius: 15px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
             font-size: 16px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
-        button:hover {
-            background: #ff5588;
-            transform: scale(1.05);
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
-        .msg {
-            margin-top: 20px;
-            padding: 15px;
-            background: #ffeef4;
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .table-container {
+            background: white;
             border-radius: 20px;
-            display: none;
-            color: #ff3366;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow-x: auto;
         }
-        .flower {
-            position: fixed;
-            font-size: 25px;
-            pointer-events: none;
-            animation: fall 5s linear forwards;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        @keyframes fall {
-            0% { transform: translateY(-100px); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .stats {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stats span {
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5em;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 48px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            th, td { font-size: 12px; padding: 10px; }
+            .header { flex-direction: column; text-align: center; gap: 20px; }
         }
     </style>
 </head>
 <body>
+    <!-- Login sahifasi -->
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <h1>🎓 GulduBaza</h1>
+                <p>Tizimga kiring</p>
+            </div>
+            <div class="login-type">
+                <button class="login-type-btn active" onclick="setLoginType('admin')">👑 Admin</button>
+                <button class="login-type-btn" onclick="setLoginType('student')">🎓 Talaba</button>
+            </div>
+            <div id="loginError" class="error-msg"></div>
+            <input type="text" id="loginId" placeholder="ID">
+            <input type="password" id="loginCode" placeholder="Parol">
+            <button onclick="login()">Kirish</button>
+        </div>
+    </div>
 
-<div class="card">
-    <div class="heart">💖</div>
-    <h1>Salom go'zalim!</h1>
-    <p style="font-size: 18px;">Sen bu sahifaga kirganing bilan yuragim tez ura boshladi 💓</p>
-    <button onclick="showLove()">💗 Men ham sevaman</button>
-    <button onclick="showGift()">🎁 Sovg'a</button>
-    <div id="msg" class="msg"></div>
-    <p style="margin-top: 30px; font-style: italic; color: #ff6699;">🌹 Seni sevaman, jonim! 🌹</p>
-</div>
+    <!-- Admin panel -->
+    <div id="adminPanel" class="admin-container">
+        <div class="header">
+            <div>
+                <h1>👑 GulduBaza - Admin Panel</h1>
+                <p>Talabalar va tizimni boshqarish</p>
+            </div>
+            <div class="user-info">
+                <span>👑 Admin</span>
+                <button class="logout-btn" onclick="logout()">🚪 Chiqish</button>
+            </div>
+        </div>
 
-<script>
-    function showLove() {
-        let m = document.getElementById('msg');
-        m.innerHTML = '💞 Men ham seni juda SEVAMAN! Sen eng go\'zalsan! 😘💕';
-        m.style.display = 'block';
-        for(let i=0;i<30;i++) setTimeout(()=>createHeart(), i*50);
-        setTimeout(()=> m.style.display='none', 4000);
-    }
-    function showGift() {
-        let m = document.getElementById('msg');
-        m.innerHTML = '🎁 Sovg\'a: Sening tabassuming! Har kuni seni ko\'rish baxt! 💝✨';
-        m.style.display = 'block';
-        for(let i=0;i<20;i++) setTimeout(()=>createFlower(), i*80);
-        setTimeout(()=> m.style.display='none', 4000);
-    }
-    function createHeart() {
-        let h = document.createElement('div');
-        h.innerHTML = '💖';
-        h.classList.add('flower');
-        h.style.left = Math.random() * window.innerWidth + 'px';
-        h.style.top = '0px';
-        document.body.appendChild(h);
-        setTimeout(()=> h.remove(), 5000);
-    }
-    function createFlower() {
-        let f = document.createElement('div');
-        f.innerHTML = ['🌸','🌹','🌺','💐'][Math.floor(Math.random()*4)];
-        f.classList.add('flower');
-        f.style.left = Math.random() * window.innerWidth + 'px';
-        f.style.top = '0px';
-        document.body.appendChild(f);
-        setTimeout(()=> f.remove(), 5000);
-    }
-    setInterval(()=> createHeart(), 1000);
-    setInterval(()=> createFlower(), 2000);
-</script>
+        <div class="form-card">
+            <h2 class="form-title">➕ Yangi Talaba Qo'shish</h2>
+            <form id="studentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📝 Ism Familiya *</label>
+                        <input type="text" id="fullName" required placeholder="Masalan: Alisher Karimov">
+                    </div>
+                    <div class="form-group">
+                        <label>🏛️ Fakultet *</label>
+                        <select id="faculty" required>
+                            <option value="">Tanlang</option>
+                            <option value="Axborot Texnologiyalari">💻 Axborot Texnologiyalari</option>
+                            <option value="Iqtisodiyot">📊 Iqtisodiyot</option>
+                            <option value="Filologiya">📖 Filologiya</option>
+                            <option value="Huquq">⚖️ Huquq</option>
+                            <option value="Muhandislik">🔧 Muhandislik</option>
+                            <option value="Tibbiyot">🏥 Tibbiyot</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>👥 Guruh raqami *</label>
+                        <input type="text" id="groupNumber" required placeholder="Masalan: 101, 202-B">
+                    </div>
+                    <div class="form-group">
+                        <label>📚 Kurs *</label>
+                        <select id="course" required>
+                            <option value="">Tanlang</option>
+                            <option value="1">1-kurs 🎓</option>
+                            <option value="2">2-kurs 📘</option>
+                            <option value="3">3-kurs 📙</option>
+                            <option value="4">4-kurs 📕</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>🔑 Talaba Paroli *</label>
+                        <input type="text" id="studentPassword" required placeholder="Talaba uchun parol">
+                    </div>
+                    <div class="form-group">
+                        <label>📞 Telefon raqam</label>
+                        <input type="tel" id="phone" placeholder="+998 __ ___ __ __">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📧 Email</label>
+                        <input type="email" id="email" placeholder="example@university.uz">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">➕ Talaba Qo'shish</button>
+            </form>
+        </div>
 
+        <div class="table-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Qidirish (Ism, fakultet, guruh...)">
+                <button id="clearSearch" class="btn btn-info">🔄 Tozalash</button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Ism Familiya</th><th>Fakultet</th><th>Guruh</th><th>Kurs</th><th>Parol</th><th>Telefon</th><th>Email</th><th>Amallar</th></tr>
+                    </thead>
+                    <tbody id="adminTableBody"></tbody>
+                </table>
+            </div>
+            <div class="stats">📊 Jami talabalar: <span id="totalCount">0</span> ta</div>
+        </div>
+    </div>
+
+    <!-- Talabalar paneli -->
+    <div id="studentPanel" class="student-container">
+        <div class="header">
+            <div><h1>🎓 GulduBaza - Talabalar Paneli</h1><p>Shaxsiy ma'lumotlaringiz</p></div>
+            <div class="user-info"><span>🎓 <span id="studentName"></span></span><button class="logout-btn" onclick="logout()">🚪 Chiqish</button></div>
+        </div>
+        <div class="profile-card">
+            <div class="profile-avatar">👨🎓</div>
+            <h2 id="profileName"></h2>
+            <p id="profileId"></p>
+        </div>
+        <div class="table-container">
+            <h3 style="margin-bottom: 20px;">📋 Mening ma'lumotlarim</h3>
+            <table>
+                <thead><tr><th>ID</th><th>Ism Familiya</th><th>Fakultet</th><th>Guruh</th><th>Kurs</th><th>Telefon</th><th>Email</th></tr></thead>
+                <tbody id="studentTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let students = [];
+        let nextId = 1;
+        let currentUser = null;
+        let loginType = 'admin';
+
+        function setLoginType(type) {
+            loginType = type;
+            document.querySelectorAll('.login-type-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function login() {
+            const id = document.getElementById('loginId').value;
+            const code = document.getElementById('loginCode').value;
+            const errorDiv = document.getElementById('loginError');
+
+            if (loginType === 'admin') {
+                if (id === '1' && code === '1') {
+                    sessionStorage.setItem('loggedIn', 'admin');
+                    showAdminPanel();
+                    errorDiv.style.display = 'none';
+                } else {
+                    errorDiv.textContent = '❌ Admin ID yoki parol noto\'g\'ri!';
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                loadData();
+                const student = students.find(s => s.id == id && s.password === code);
+                if (student) {
+                    currentUser = student;
+                    sessionStorage.setItem('loggedIn', 'student');
+                    sessionStorage.setItem('studentId', student.id);
+                    showStudentPanel();
+                    errorDiv.style.display = 'none';
+                } else {
+                    errorDiv.textContent = '❌ Talaba ID yoki parol noto\'g\'ri!';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('studentId');
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('studentPanel').style.display = 'none';
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginCode').value = '';
+        }
+
+        function showAdminPanel() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('studentPanel').style.display = 'none';
+            loadData();
+            renderAdminTable();
+        }
+
+        function showStudentPanel() {
+            const studentId = parseInt(sessionStorage.getItem('studentId'));
+            currentUser = students.find(s => s.id === studentId);
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('studentPanel').style.display = 'block';
+            document.getElementById('studentName').innerText = currentUser?.fullName || 'Talaba';
+            document.getElementById('profileName').innerText = currentUser?.fullName || '';
+            document.getElementById('profileId').innerText = 'ID: ' + (currentUser?.id || '');
+            renderStudentTable();
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem('guldu_students');
+            if (savedData) {
+                students = JSON.parse(savedData);
+                if (students.length > 0) nextId = Math.max(...students.map(s => s.id)) + 1;
+            } else {
+                students = [
+                    { id: 1, fullName: "Alisher Karimov", faculty: "Axborot Texnologiyalari", groupNumber: "101", course: "3", password: "123", phone: "+998901234567", email: "alisher@university.uz" },
+                    { id: 2, fullName: "Dilnoza Rahimova", faculty: "Iqtisodiyot", groupNumber: "202-B", course: "2", password: "123", phone: "+998902345678", email: "dilnoza@university.uz" }
+                ];
+                nextId = 3;
+            }
+            saveData();
+        }
+
+        function saveData() { localStorage.setItem('guldu_students', JSON.stringify(students)); }
+
+        function addStudent(data) {
+            const newStudent = { id: nextId++, ...data };
+            students.push(newStudent);
+            saveData();
+            renderAdminTable();
+            return newStudent;
+        }
+
+        function deleteStudent(id) {
+            if (confirm("⚠️ Rostan ham bu talabani o'chirmoqchimisiz?")) {
+                students = students.filter(s => s.id !== id);
+                saveData();
+                renderAdminTable();
+                showNotification("✅ Talaba o'chirildi!");
+            }
+        }
+
+        function editStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+            const newName = prompt("Ism Familiya:", student.fullName);
+            if (newName && newName.trim()) student.fullName = newName.trim();
+            const newFaculty = prompt("Fakultet:", student.faculty);
+            if (newFaculty && newFaculty.trim()) student.faculty = newFaculty.trim();
+            const newGroup = prompt("Guruh:", student.groupNumber);
+            if (newGroup && newGroup.trim()) student.groupNumber = newGroup.trim();
+            const newCourse = prompt("Kurs (1-4):", student.course);
+            if (newCourse && newCourse >= 1 && newCourse <= 4) student.course = newCourse;
+            const newPassword = prompt("Yangi parol:", student.password);
+            if (newPassword && newPassword.trim()) student.password = newPassword.trim();
+            const newPhone = prompt("Telefon:", student.phone);
+            if (newPhone !== null) student.phone = newPhone;
+            const newEmail = prompt("Email:", student.email);
+            if (newEmail !== null) student.email = newEmail;
+            saveData();
+            renderAdminTable();
+            showNotification("✏️ Tahrirlandi!");
+        }
+
+        function showNotification(msg) {
+            const notif = document.createElement('div');
+            notif.textContent = msg;
+            notif.style.cssText = `position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#48bb78,#38a169);color:white;padding:15px 25px;border-radius:12px;font-weight:600;z-index:1000;animation:slideIn 0.3s ease;`;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2000);
+        }
+
+        function renderAdminTable(filtered = null) {
+            const tbody = document.getElementById('adminTableBody');
+            const data = filtered !== null ? filtered : students;
+            if (!data.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center">📭 Talabalar yo\'q</td></tr>'; document.getElementById('totalCount').innerText = students.length; return; }
+            tbody.innerHTML = data.map(s => `<tr>
+                <td>${s.id}</td><td><strong>${escapeHtml(s.fullName)}</strong></td><td>${escapeHtml(s.faculty)}</td><td>${escapeHtml(s.groupNumber)}</td><td>${s.course}-kurs</td>
+                <td><code>${s.password}</code></td><td>${escapeHtml(s.phone || '-')}</td><td>${escapeHtml(s.email || '-')}</td>
+                <td class="action-buttons"><button class="btn btn-warning" onclick="editStudent(${s.id})">✏️</button><button class="btn btn-danger" onclick="deleteStudent(${s.id})">🗑️</button></td>
+            </tr>`).join('');
+            document.getElementById('totalCount').innerText = students.length;
+        }
+
+        function renderStudentTable() {
+            const tbody = document.getElementById('studentTableBody');
+            if (!currentUser) return;
+            tbody.innerHTML = `<tr><td>${currentUser.id}</td><td><strong>${escapeHtml(currentUser.fullName)}</strong></td><td>${escapeHtml(currentUser.faculty)}</td><td>${escapeHtml(currentUser.groupNumber)}</td><td>${currentUser.course}-kurs</td><td>${escapeHtml(currentUser.phone || '-')}</td><td>${escapeHtml(currentUser.email || '-')}</td></tr>`;
+        }
+
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+        document.getElementById('studentForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value.trim();
+            const faculty = document.getElementById('faculty').value;
+            const groupNumber = document.getElementById('groupNumber').value.trim();
+            const course = document.getElementById('course').value;
+            const password = document.getElementById('studentPassword').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            if (!fullName || !faculty || !groupNumber || !course || !password) { alert("Barcha majburiy maydonlarni to'ldiring!"); return; }
+            addStudent({ fullName, faculty, groupNumber, course, password, phone, email });
+            this.reset();
+            showNotification("✅ Yangi talaba qo'shildi!");
+        });
+
+        document.getElementById('searchInput')?.addEventListener('keyup', function() {
+            const term = this.value.toLowerCase();
+            const filtered = students.filter(s => s.fullName.toLowerCase().includes(term) || s.faculty.toLowerCase().includes(term) || s.groupNumber.toLowerCase().includes(term));
+            renderAdminTable(filtered);
+        });
+        document.getElementById('clearSearch')?.addEventListener('click', function() { document.getElementById('searchInput').value = ''; renderAdminTable(); });
+
+        window.onload = function() {
+            const logged = sessionStorage.getItem('loggedIn');
+            if (logged === 'admin') showAdminPanel();
+            else if (logged === 'student') showStudentPanel();
+            else { document.getElementById('loginPage').style.display = 'flex'; document.getElementById('adminPanel').style.display = 'none'; document.getElementById('studentPanel').style.display = 'none'; }
+        };
+    </script>
 </body>
 </html>
