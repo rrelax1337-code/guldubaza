@@ -2,44 +2,53 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GulduBaza | HEMIS Talabalar tizimi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GulduBaza Pro | HEMIS Mukammal Tizim</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: all 0.2s ease;
         }
 
         :root {
             --primary: #4361ee;
             --primary-dark: #3a56d4;
+            --primary-light: #eef2ff;
             --secondary: #7209b7;
-            --success: #06d6a0;
-            --danger: #ef476f;
-            --warning: #ffd166;
-            --dark: #2b2d42;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --border: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--light);
-            min-height: 100vh;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
         }
 
         body.dark {
-            --light: #1a1a2e;
-            --dark: #f8f9fa;
-            --border: #2d2d44;
-            background: #0f0f1a;
-            color: #e0e0e0;
+            --primary-light: #1e293b;
+            --dark: #f1f5f9;
+            --light: #0f172a;
+            --border: #334155;
+            --card-bg: #1e293b;
+            --sidebar-bg: #0f172a;
+            --header-bg: #1e293b;
+            background: #0f172a;
+            color: #e2e8f0;
         }
 
-        /* Login sahifasi */
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: var(--light);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* Login */
         .login-container {
             display: flex;
             justify-content: center;
@@ -50,18 +59,13 @@
         }
 
         .login-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 48px 40px;
             width: 100%;
-            max-width: 450px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            max-width: 460px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
             animation: fadeInUp 0.5s ease;
-        }
-
-        body.dark .login-card {
-            background: #1e1e2e;
-            color: white;
         }
 
         @keyframes fadeInUp {
@@ -71,11 +75,11 @@
 
         .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .login-header h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -83,8 +87,8 @@
 
         .login-type {
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 28px;
         }
 
         .login-type-btn {
@@ -92,24 +96,27 @@
             padding: 12px;
             border: 2px solid var(--border);
             background: transparent;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.2s;
         }
 
         .login-type-btn.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            border-color: var(--primary);
+            border-color: transparent;
         }
 
         .login-card input {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
             border: 2px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 16px;
+            background: var(--card-bg);
+            color: var(--dark);
         }
 
         .login-card button {
@@ -118,93 +125,100 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        /* Asosiy container */
+        .login-card button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* App */
         .app-container {
             display: none;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 20px;
         }
 
         /* Header */
         .header {
-            background: white;
-            border-radius: 15px;
-            padding: 15px 25px;
-            margin-bottom: 25px;
+            background: var(--header-bg);
+            border-radius: 24px;
+            padding: 16px 28px;
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        body.dark .header {
-            background: #1e1e2e;
+            gap: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
         }
 
         .logo h2 {
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-size: 1.8em;
         }
 
         .header-controls {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .lang-btn, .theme-btn {
-            padding: 8px 15px;
+            padding: 8px 16px;
             border: 1px solid var(--border);
-            background: transparent;
-            border-radius: 10px;
+            background: var(--card-bg);
+            border-radius: 12px;
             cursor: pointer;
+            font-weight: 500;
         }
 
-        /* Sidebar */
+        /* Layout */
         .main-layout {
             display: flex;
-            gap: 25px;
+            gap: 24px;
             flex-wrap: wrap;
         }
 
         .sidebar {
-            width: 260px;
-            background: white;
-            border-radius: 15px;
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-radius: 24px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        body.dark .sidebar {
-            background: #1e1e2e;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
         .sidebar-item {
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 6px;
+            border-radius: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: all 0.2s;
+            font-weight: 500;
         }
 
         .sidebar-item:hover {
-            background: rgba(67, 97, 238, 0.1);
+            background: var(--primary-light);
         }
 
         .sidebar-item.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
 
@@ -213,42 +227,40 @@
             min-width: 300px;
         }
 
-        /* Kartalar */
+        /* Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 24px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
         }
 
-        body.dark .stat-card {
-            background: #1e1e2e;
+        .stat-card:hover {
+            transform: translateY(-4px);
         }
 
         .stat-card h3 {
-            font-size: 2em;
+            font-size: 2.5em;
             color: var(--primary);
         }
 
-        /* Jadvallar */
         .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        body.dark .card {
-            background: #1e1e2e;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
         }
 
         .card-header {
@@ -257,7 +269,13 @@
             align-items: center;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 16px;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
         }
 
         table {
@@ -266,35 +284,55 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 14px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
 
         th {
-            background: var(--primary);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            font-weight: 600;
         }
 
+        tr:hover {
+            background: var(--primary-light);
+        }
+
+        /* Forms */
         input, select, textarea {
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            padding: 12px 14px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-size: 14px;
+            background: var(--card-bg);
+            color: var(--dark);
+            transition: all 0.2s;
         }
 
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
         .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 14px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            transition: all 0.2s;
         }
 
-        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
         .btn-danger { background: var(--danger); color: white; }
-        .btn-warning { background: var(--warning); color: var(--dark); }
-        .btn-sm { padding: 5px 10px; font-size: 12px; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-sm { padding: 6px 12px; font-size: 12px; }
+        .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -302,70 +340,103 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 28px;
             width: 90%;
-            max-width: 500px;
-        }
-
-        body.dark .modal-content {
-            background: #1e1e2e;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
+            margin-bottom: 6px;
+            font-weight: 600;
         }
 
-        .form-group input, .form-group select {
-            width: 100%;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Search */
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            z-index: 1100;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         @media (max-width: 768px) {
-            .sidebar { width: 100%; }
-            .stats-grid { grid-template-columns: 1fr; }
+            .sidebar { width: 100%; position: static; }
+            .form-row { grid-template-columns: 1fr; }
+            .card-header { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
 <body>
-    <!-- Login sahifasi -->
+    <!-- Login -->
     <div id="loginPage" class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <h1>🎓 GulduBaza</h1>
-                <p>HEMIS Student axborot tizimi</p>
+                <h1>🎓 GulduBaza Pro</h1>
+                <p>HEMIS Mukammal Axborot Tizimi</p>
             </div>
             <div class="login-type">
-                <button class="login-type-btn active" onclick="setLoginType('admin')">👑 Admin</button>
+                <button class="login-type-btn active" onclick="setLoginType('admin')">👑 Administrator</button>
                 <button class="login-type-btn" onclick="setLoginType('student')">🎓 Talaba</button>
             </div>
-            <div id="loginError" style="color: red; text-align: center; margin-bottom: 15px; display: none;"></div>
-            <input type="text" id="loginId" placeholder="ID yoki Login">
+            <div id="loginError" style="color: var(--danger); text-align: center; margin-bottom: 16px; display: none; padding: 10px; background: rgba(239,68,68,0.1); border-radius: 12px;"></div>
+            <input type="text" id="loginId" placeholder="Login yoki Talaba ID">
             <input type="password" id="loginPassword" placeholder="Parol">
-            <button onclick="login()">Kirish</button>
-            <p style="text-align: center; margin-top: 20px; font-size: 12px; color: gray;">Admin: admin / admin123 | Talaba: ST001 / 12345</p>
+            <button onclick="login()">🔐 Kirish</button>
+            <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--gray);">Admin: admin / admin123 | Talaba: ST001 / 12345</p>
         </div>
     </div>
 
-    <!-- Asosiy app -->
+    <!-- Main App -->
     <div id="appContainer" class="app-container">
         <div class="header">
             <div class="logo">
-                <h2>🎓 GulduBaza <span id="userTypeBadge"></span></h2>
-                <small id="userNameDisplay"></small>
+                <h2>🎓 GulduBaza Pro</h2>
+                <small id="userInfoDisplay"></small>
             </div>
             <div class="header-controls">
                 <select id="languageSelect" class="lang-btn" onchange="changeLanguage()">
@@ -373,27 +444,23 @@
                     <option value="ru">🇷🇺 Русский</option>
                     <option value="en">🇬🇧 English</option>
                 </select>
-                <button class="theme-btn" onclick="toggleTheme()">🌙</button>
-                <button class="btn btn-danger" onclick="logout()">Chiqish</button>
+                <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+                <button class="btn btn-danger" onclick="logout()">🚪 Chiqish</button>
             </div>
         </div>
 
         <div class="main-layout">
-            <div class="sidebar" id="sidebar">
-                <!-- Sidebar menyu dinamik yuklanadi -->
-            </div>
-            <div class="content" id="mainContent">
-                <!-- Asosiy kontent dinamik yuklanadi -->
-            </div>
+            <div class="sidebar" id="sidebar"></div>
+            <div class="content" id="mainContent"></div>
         </div>
     </div>
 
     <!-- Modal -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" onclick="if(event.target===this) closeModal()">
         <div class="modal-content">
-            <h3 id="modalTitle"></h3>
+            <h3 id="modalTitle" style="margin-bottom: 20px;"></h3>
             <div id="modalBody"></div>
-            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+            <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
                 <button class="btn btn-danger" onclick="closeModal()">Bekor qilish</button>
                 <button class="btn btn-primary" onclick="saveModal()">Saqlash</button>
             </div>
@@ -401,7 +468,7 @@
     </div>
 
     <script>
-        // ==================== MA'LUMOTLAR ====================
+        // ==================== MA'LUMOTLAR STRUKTURASI ====================
         let students = [];
         let teachers = [];
         let subjects = [];
@@ -409,72 +476,107 @@
         let grades = [];
         let schedules = [];
         let contracts = [];
+        let payments = [];
 
         let currentUser = null;
         let currentUserType = null;
         let currentPage = 'dashboard';
         let currentLang = 'uz';
+        let currentEditItem = null;
+        let currentModalType = null;
 
+        // Tillar
         const translations = {
             uz: {
-                dashboard: 'Dashboard', students: 'Talabalar', teachers: 'O\'qituvchilar',
-                subjects: 'Fanlar', groups: 'Guruhlar', grades: 'Baholar',
-                schedule: 'Dars jadvali', contracts: 'Shartnomalar', profile: 'Shaxsiy ma\'lumotlar',
-                myGrades: 'Baholarim', mySchedule: 'Dars jadvalim', myContract: 'Shartnoma',
+                dashboard: '📊 Boshqaruv paneli', students: '👨‍🎓 Talabalar', teachers: '👨‍🏫 O\'qituvchilar',
+                subjects: '📚 Fanlar', groups: '👥 Guruhlar', grades: '🎯 Baholar',
+                schedule: '📅 Dars jadvali', contracts: '📄 Shartnomalar', payments: '💰 To\'lovlar',
+                profile: '👤 Shaxsiy ma\'lumotlar', myGrades: '🎓 Baholarim', mySchedule: '📅 Dars jadvalim',
+                myContract: '📄 Shartnoma', myPayments: '💰 To\'lovlarim',
                 totalStudents: 'Jami talabalar', totalTeachers: 'Jami o\'qituvchilar',
-                totalSubjects: 'Jami fanlar', avgGrade: 'O\'rtacha baho'
+                totalSubjects: 'Jami fanlar', avgGrade: 'O\'rtacha baho',
+                add: '➕ Qo\'shish', edit: '✏️ Tahrirlash', delete: '🗑️ O\'chirish', search: '🔍 Qidirish',
+                save: '💾 Saqlash', cancel: '❌ Bekor qilish', close: '✖️ Yopish'
             },
             ru: {
-                dashboard: 'Дашборд', students: 'Студенты', teachers: 'Преподаватели',
-                subjects: 'Предметы', groups: 'Группы', grades: 'Оценки',
-                schedule: 'Расписание', contracts: 'Контракты', profile: 'Личные данные',
-                myGrades: 'Мои оценки', mySchedule: 'Мое расписание', myContract: 'Контракт',
+                dashboard: '📊 Панель', students: '👨‍🎓 Студенты', teachers: '👨‍🏫 Преподаватели',
+                subjects: '📚 Предметы', groups: '👥 Группы', grades: '🎯 Оценки',
+                schedule: '📅 Расписание', contracts: '📄 Контракты', payments: '💰 Платежи',
+                profile: '👤 Профиль', myGrades: '🎓 Мои оценки', mySchedule: '📅 Расписание',
+                myContract: '📄 Контракт', myPayments: '💰 Платежи',
                 totalStudents: 'Всего студентов', totalTeachers: 'Всего преподавателей',
-                totalSubjects: 'Всего предметов', avgGrade: 'Средний балл'
+                totalSubjects: 'Всего предметов', avgGrade: 'Средний балл',
+                add: '➕ Добавить', edit: '✏️ Редактировать', delete: '🗑️ Удалить', search: '🔍 Поиск',
+                save: '💾 Сохранить', cancel: '❌ Отмена', close: '✖️ Закрыть'
             },
             en: {
-                dashboard: 'Dashboard', students: 'Students', teachers: 'Teachers',
-                subjects: 'Subjects', groups: 'Groups', grades: 'Grades',
-                schedule: 'Schedule', contracts: 'Contracts', profile: 'Profile',
-                myGrades: 'My Grades', mySchedule: 'My Schedule', myContract: 'Contract',
+                dashboard: '📊 Dashboard', students: '👨‍🎓 Students', teachers: '👨‍🏫 Teachers',
+                subjects: '📚 Subjects', groups: '👥 Groups', grades: '🎯 Grades',
+                schedule: '📅 Schedule', contracts: '📄 Contracts', payments: '💰 Payments',
+                profile: '👤 Profile', myGrades: '🎓 My Grades', mySchedule: '📅 My Schedule',
+                myContract: '📄 Contract', myPayments: '💰 Payments',
                 totalStudents: 'Total Students', totalTeachers: 'Total Teachers',
-                totalSubjects: 'Total Subjects', avgGrade: 'Average Grade'
+                totalSubjects: 'Total Subjects', avgGrade: 'Average Grade',
+                add: '➕ Add', edit: '✏️ Edit', delete: '🗑️ Delete', search: '🔍 Search',
+                save: '💾 Save', cancel: '❌ Cancel', close: '✖️ Close'
             }
         };
 
-        // ==================== INITIAL DATA ====================
+        // ==================== DATA INIT ====================
         function initData() {
-            if (!localStorage.getItem('guldu_data')) {
+            if (!localStorage.getItem('guldu_pro_data')) {
+                // Talabalar
                 students = [
-                    { id: 'ST001', fullName: 'Alisher Karimov', faculty: 'Axborot texnologiyalari', groupId: 'GRP001', course: 3, phone: '+998901234567', email: 'alisher@student.uz', password: '12345' },
-                    { id: 'ST002', fullName: 'Dilnoza Rahimova', faculty: 'Iqtisodiyot', groupId: 'GRP002', course: 2, phone: '+998902345678', email: 'dilnoza@student.uz', password: '12345' }
+                    { id: 'ST001', fullName: 'Alisher Karimov', faculty: 'Axborot texnologiyalari', groupId: 'GRP001', course: 3, phone: '+998901234567', email: 'alisher@student.uz', password: '12345', address: 'Guliston shahar' },
+                    { id: 'ST002', fullName: 'Dilnoza Rahimova', faculty: 'Iqtisodiyot', groupId: 'GRP002', course: 2, phone: '+998902345678', email: 'dilnoza@student.uz', password: '12345', address: 'Sirdaryo tuman' },
+                    { id: 'ST003', fullName: 'Jasur Toshmatov', faculty: 'Muhandislik', groupId: 'GRP003', course: 4, phone: '+998903456789', email: 'jasur@student.uz', password: '12345', address: 'Guliston shahar' }
                 ];
+                // O'qituvchilar
                 teachers = [
-                    { id: 'T001', fullName: 'Prof. Ahmadov Bahodir', subjectIds: ['SUB001', 'SUB002'], phone: '+998901234567', email: 'a.ahmadov@university.uz', password: 'teacher123' },
-                    { id: 'T002', fullName: 'Dots. Karimova Gulnora', subjectIds: ['SUB003'], phone: '+998902345678', email: 'g.karimova@university.uz', password: 'teacher123' }
+                    { id: 'T001', fullName: 'Prof. Ahmadov Bahodir', position: 'Professor', subjectIds: ['SUB001', 'SUB002'], phone: '+998901234567', email: 'b.ahmadov@university.uz', password: 'teacher123' },
+                    { id: 'T002', fullName: 'Dots. Karimova Gulnora', position: 'Dotsent', subjectIds: ['SUB003'], phone: '+998902345678', email: 'g.karimova@university.uz', password: 'teacher123' },
+                    { id: 'T003', fullName: 'PhD. Rahimov Sardor', position: 'Katta o\'qituvchi', subjectIds: ['SUB004'], phone: '+998903456789', email: 's.rahimov@university.uz', password: 'teacher123' }
                 ];
+                // Fanlar
                 subjects = [
-                    { id: 'SUB001', name: 'Dasturlash asoslari', teacherId: 'T001', credits: 5 },
-                    { id: 'SUB002', name: 'Web dasturlash', teacherId: 'T001', credits: 6 },
-                    { id: 'SUB003', name: 'Mikroiqtisodiyot', teacherId: 'T002', credits: 4 }
+                    { id: 'SUB001', name: 'Dasturlash asoslari', code: 'CS101', teacherId: 'T001', credits: 5, semester: 1 },
+                    { id: 'SUB002', name: 'Web dasturlash', code: 'CS201', teacherId: 'T001', credits: 6, semester: 2 },
+                    { id: 'SUB003', name: 'Mikroiqtisodiyot', code: 'EC101', teacherId: 'T002', credits: 4, semester: 1 },
+                    { id: 'SUB004', name: 'Kompyuter grafikasi', code: 'CS301', teacherId: 'T003', credits: 5, semester: 3 }
                 ];
+                // Guruhlar
                 groups = [
-                    { id: 'GRP001', name: 'AT-101', course: 3, subjectIds: ['SUB001', 'SUB002'] },
-                    { id: 'GRP002', name: 'IQ-202', course: 2, subjectIds: ['SUB003'] }
+                    { id: 'GRP001', name: 'AT-101', course: 3, faculty: 'Axborot texnologiyalari', subjectIds: ['SUB001', 'SUB002'], studentCount: 25 },
+                    { id: 'GRP002', name: 'IQ-202', course: 2, faculty: 'Iqtisodiyot', subjectIds: ['SUB003'], studentCount: 22 },
+                    { id: 'GRP003', name: 'MH-401', course: 4, faculty: 'Muhandislik', subjectIds: ['SUB004'], studentCount: 20 }
                 ];
+                // Baholar
                 grades = [
-                    { id: 1, studentId: 'ST001', subjectId: 'SUB001', grade1: 85, grade2: 90, final: 88 },
-                    { id: 2, studentId: 'ST001', subjectId: 'SUB002', grade1: 78, grade2: 82, final: 80 },
-                    { id: 3, studentId: 'ST002', subjectId: 'SUB003', grade1: 92, grade2: 88, final: 90 }
+                    { id: 'GRD001', studentId: 'ST001', subjectId: 'SUB001', grade1: 85, grade2: 90, final: 88, total: 88, letter: 'B' },
+                    { id: 'GRD002', studentId: 'ST001', subjectId: 'SUB002', grade1: 78, grade2: 82, final: 80, total: 80, letter: 'B' },
+                    { id: 'GRD003', studentId: 'ST002', subjectId: 'SUB003', grade1: 92, grade2: 88, final: 90, total: 90, letter: 'A' },
+                    { id: 'GRD004', studentId: 'ST003', subjectId: 'SUB004', grade1: 88, grade2: 85, final: 87, total: 87, letter: 'B' }
                 ];
+                // Dars jadvali (hafta kunlari bo'yicha)
                 schedules = [
-                    { id: 1, groupId: 'GRP001', subjectId: 'SUB001', day: 'Dushanba', time: '09:00-10:30', room: '101' },
-                    { id: 2, groupId: 'GRP001', subjectId: 'SUB002', day: 'Chorshanba', time: '11:00-12:30', room: '203' },
-                    { id: 3, groupId: 'GRP002', subjectId: 'SUB003', day: 'Seshanba', time: '14:00-15:30', room: '305' }
+                    { id: 'SCH001', groupId: 'GRP001', subjectId: 'SUB001', day: 'Dushanba', dayNum: 1, time: '09:00-10:30', room: '101', teacherId: 'T001', type: 'Ma\'ruza' },
+                    { id: 'SCH002', groupId: 'GRP001', subjectId: 'SUB002', day: 'Chorshanba', dayNum: 3, time: '11:00-12:30', room: '203', teacherId: 'T001', type: 'Amaliyot' },
+                    { id: 'SCH003', groupId: 'GRP001', subjectId: 'SUB001', day: 'Juma', dayNum: 5, time: '14:00-15:30', room: '101', teacherId: 'T001', type: 'Laboratoriya' },
+                    { id: 'SCH004', groupId: 'GRP002', subjectId: 'SUB003', day: 'Seshanba', dayNum: 2, time: '14:00-15:30', room: '305', teacherId: 'T002', type: 'Ma\'ruza' },
+                    { id: 'SCH005', groupId: 'GRP003', subjectId: 'SUB004', day: 'Payshanba', dayNum: 4, time: '10:00-11:30', room: '408', teacherId: 'T003', type: 'Amaliyot' }
                 ];
+                // Shartnomalar
                 contracts = [
-                    { id: 1, studentId: 'ST001', amount: 8500000, paid: 4250000, status: 'qisman', file: null },
-                    { id: 2, studentId: 'ST002', amount: 7800000, paid: 7800000, status: 'to\'langan', file: null }
+                    { id: 'CNT001', studentId: 'ST001', amount: 8500000, paid: 4250000, debt: 4250000, status: 'qisman', date: '2024-09-01' },
+                    { id: 'CNT002', studentId: 'ST002', amount: 7800000, paid: 7800000, debt: 0, status: 'to\'langan', date: '2024-09-01' },
+                    { id: 'CNT003', studentId: 'ST003', amount: 9200000, paid: 2300000, debt: 6900000, status: 'qisman', date: '2024-09-01' }
+                ];
+                // To'lovlar
+                payments = [
+                    { id: 'PAY001', studentId: 'ST001', amount: 2125000, date: '2024-10-15', type: 'Kontrakt', status: 'tasdiqlangan' },
+                    { id: 'PAY002', studentId: 'ST001', amount: 2125000, date: '2024-11-20', type: 'Kontrakt', status: 'tasdiqlangan' },
+                    { id: 'PAY003', studentId: 'ST002', amount: 7800000, date: '2024-09-10', type: 'Kontrakt', status: 'tasdiqlangan' },
+                    { id: 'PAY004', studentId: 'ST003', amount: 2300000, date: '2024-10-05', type: 'Kontrakt', status: 'tasdiqlangan' }
                 ];
                 saveData();
             } else {
@@ -483,21 +585,31 @@
         }
 
         function saveData() {
-            const data = { students, teachers, subjects, groups, grades, schedules, contracts };
-            localStorage.setItem('guldu_data', JSON.stringify(data));
+            const data = { students, teachers, subjects, groups, grades, schedules, contracts, payments };
+            localStorage.setItem('guldu_pro_data', JSON.stringify(data));
         }
 
         function loadData() {
-            const data = JSON.parse(localStorage.getItem('guldu_data'));
+            const data = JSON.parse(localStorage.getItem('guldu_pro_data'));
             if (data) {
-                students = data.students;
-                teachers = data.teachers;
-                subjects = data.subjects;
-                groups = data.groups;
-                grades = data.grades;
-                schedules = data.schedules;
-                contracts = data.contracts;
+                students = data.students || [];
+                teachers = data.teachers || [];
+                subjects = data.subjects || [];
+                groups = data.groups || [];
+                grades = data.grades || [];
+                schedules = data.schedules || [];
+                contracts = data.contracts || [];
+                payments = data.payments || [];
             }
+        }
+
+        function showNotification(msg, type = 'success') {
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.textContent = msg;
+            notif.style.background = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#f59e0b';
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
         }
 
         // ==================== LOGIN ====================
@@ -508,7 +620,7 @@
         }
 
         function login() {
-            const id = document.getElementById('loginId').value;
+            const id = document.getElementById('loginId').value.trim();
             const password = document.getElementById('loginPassword').value;
             const errorDiv = document.getElementById('loginError');
 
@@ -517,8 +629,9 @@
                     currentUser = { id: 'admin', name: 'Administrator', type: 'admin' };
                     showApp();
                     errorDiv.style.display = 'none';
+                    showNotification('Xush kelibsiz, Administrator!');
                 } else {
-                    errorDiv.textContent = 'Admin login yoki parol xato!';
+                    errorDiv.textContent = '❌ Admin login yoki parol noto\'g\'ri! (admin / admin123)';
                     errorDiv.style.display = 'block';
                 }
             } else {
@@ -527,8 +640,9 @@
                     currentUser = { ...student, type: 'student' };
                     showApp();
                     errorDiv.style.display = 'none';
+                    showNotification(`Xush kelibsiz, ${student.fullName}!`);
                 } else {
-                    errorDiv.textContent = 'Talaba ID yoki parol xato!';
+                    errorDiv.textContent = '❌ Talaba ID yoki parol noto\'g\'ri! (Masalan: ST001 / 12345)';
                     errorDiv.style.display = 'block';
                 }
             }
@@ -537,8 +651,7 @@
         function showApp() {
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('appContainer').style.display = 'block';
-            document.getElementById('userTypeBadge').innerHTML = currentUser.type === 'admin' ? '👑 Admin' : '🎓 Talaba';
-            document.getElementById('userNameDisplay').innerHTML = currentUser.fullName || currentUser.name;
+            document.getElementById('userInfoDisplay').innerHTML = currentUser.type === 'admin' ? '👑 Administrator' : `🎓 ${currentUser.fullName} (${currentUser.id})`;
             renderSidebar();
             loadPage('dashboard');
         }
@@ -549,6 +662,7 @@
             document.getElementById('appContainer').style.display = 'none';
             document.getElementById('loginId').value = '';
             document.getElementById('loginPassword').value = '';
+            showNotification('Tizimdan chiqildi');
         }
 
         // ==================== SIDEBAR ====================
@@ -556,30 +670,33 @@
             let items = [];
             if (currentUser.type === 'admin') {
                 items = [
-                    { id: 'dashboard', icon: '📊', name: translations[currentLang].dashboard },
-                    { id: 'students', icon: '👨‍🎓', name: translations[currentLang].students },
-                    { id: 'teachers', icon: '👨‍🏫', name: translations[currentLang].teachers },
-                    { id: 'subjects', icon: '📚', name: translations[currentLang].subjects },
-                    { id: 'groups', icon: '👥', name: translations[currentLang].groups },
-                    { id: 'grades', icon: '🎯', name: translations[currentLang].grades },
-                    { id: 'schedule', icon: '📅', name: translations[currentLang].schedule },
-                    { id: 'contracts', icon: '📄', name: translations[currentLang].contracts }
+                    { id: 'dashboard', icon: '📊', name: t('dashboard') },
+                    { id: 'students', icon: '👨‍🎓', name: t('students') },
+                    { id: 'teachers', icon: '👨‍🏫', name: t('teachers') },
+                    { id: 'subjects', icon: '📚', name: t('subjects') },
+                    { id: 'groups', icon: '👥', name: t('groups') },
+                    { id: 'grades', icon: '🎯', name: t('grades') },
+                    { id: 'schedule', icon: '📅', name: t('schedule') },
+                    { id: 'contracts', icon: '📄', name: t('contracts') },
+                    { id: 'payments', icon: '💰', name: t('payments') }
                 ];
             } else {
                 items = [
-                    { id: 'profile', icon: '👤', name: translations[currentLang].profile },
-                    { id: 'myGrades', icon: '🎯', name: translations[currentLang].myGrades },
-                    { id: 'mySchedule', icon: '📅', name: translations[currentLang].mySchedule },
-                    { id: 'myContract', icon: '📄', name: translations[currentLang].myContract }
+                    { id: 'profile', icon: '👤', name: t('profile') },
+                    { id: 'myGrades', icon: '🎓', name: t('myGrades') },
+                    { id: 'mySchedule', icon: '📅', name: t('mySchedule') },
+                    { id: 'myContract', icon: '📄', name: t('myContract') },
+                    { id: 'myPayments', icon: '💰', name: t('myPayments') }
                 ];
             }
-
             document.getElementById('sidebar').innerHTML = items.map(item => `
                 <div class="sidebar-item ${currentPage === item.id ? 'active' : ''}" onclick="loadPage('${item.id}')">
                     ${item.icon} ${item.name}
                 </div>
             `).join('');
         }
+
+        function t(key) { return translations[currentLang][key] || key; }
 
         // ==================== PAGE LOADER ====================
         function loadPage(page) {
@@ -595,169 +712,510 @@
                 else if (page === 'grades') renderGradesPage();
                 else if (page === 'schedule') renderSchedulePage();
                 else if (page === 'contracts') renderContractsPage();
+                else if (page === 'payments') renderPaymentsPage();
             } else {
                 if (page === 'profile') renderStudentProfile();
                 else if (page === 'myGrades') renderStudentGrades();
                 else if (page === 'mySchedule') renderStudentSchedule();
                 else if (page === 'myContract') renderStudentContract();
+                else if (page === 'myPayments') renderStudentPayments();
             }
         }
 
-        // ==================== ADMIN PAGES ====================
+        // ==================== ADMIN DASHBOARD ====================
         function renderAdminDashboard() {
+            const totalCredits = subjects.reduce((sum, s) => sum + s.credits, 0);
             const avgGrade = grades.length > 0 ? (grades.reduce((sum, g) => sum + (g.final || 0), 0) / grades.length).toFixed(1) : 0;
+            const totalDebt = contracts.reduce((sum, c) => sum + (c.debt || 0), 0);
+            
             document.getElementById('mainContent').innerHTML = `
                 <div class="stats-grid">
-                    <div class="stat-card"><h3>${students.length}</h3><p>${translations[currentLang].totalStudents}</p></div>
-                    <div class="stat-card"><h3>${teachers.length}</h3><p>${translations[currentLang].totalTeachers}</p></div>
-                    <div class="stat-card"><h3>${subjects.length}</h3><p>${translations[currentLang].totalSubjects}</p></div>
-                    <div class="stat-card"><h3>${avgGrade}</h3><p>${translations[currentLang].avgGrade}</p></div>
+                    <div class="stat-card"><h3>${students.length}</h3><p>${t('totalStudents')}</p><small>👨‍🎓</small></div>
+                    <div class="stat-card"><h3>${teachers.length}</h3><p>${t('totalTeachers')}</p><small>👨‍🏫</small></div>
+                    <div class="stat-card"><h3>${subjects.length}</h3><p>${t('totalSubjects')}</p><small>📚</small></div>
+                    <div class="stat-card"><h3>${avgGrade}</h3><p>${t('avgGrade')}</p><small>🎯</small></div>
+                    <div class="stat-card"><h3>${groups.length}</h3><p>Guruhlar</p><small>👥</small></div>
+                    <div class="stat-card"><h3>${totalCredits}</h3><p>Jami kreditlar</p><small>📖</small></div>
                 </div>
-                <div class="card"><h3>📈 So'nggi qo'shilgan talabalar</h3><table><tr><th>ID</th><th>Ism</th><th>Fakultet</th></tr>
-                ${students.slice(0,5).map(s => `<tr><td>${s.id}</td><td>${s.fullName}</td><td>${s.faculty}</td></tr>`).join('')}</table></div>
+                <div class="card">
+                    <div class="card-header"><h3>📈 So'nggi qo'shilgan talabalar</h3><button class="btn btn-primary" onclick="loadPage('students')">${t('add')}</button></div>
+                    <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Ism Familiya</th><th>Fakultet</th><th>Guruh</th><th>Kurs</th></tr></thead><tbody>
+                    ${students.slice(0,5).map(s => `<tr><td>${s.id}</td><td><strong>${escapeHtml(s.fullName)}</strong></td><td>${s.faculty}</td><td>${s.groupId}</td><td>${s.course}-kurs</td></tr>`).join('')}
+                    </tbody></table></div>
+                </div>
+                <div class="card"><h3>💰 To'lov statistikasi</h3><p>Jami qarz: ${totalDebt.toLocaleString()} so'm</p><div style="height:10px; background:var(--border); border-radius:10px; margin-top:10px;"><div style="width:${(totalDebt/(contracts.reduce((s,c)=>s+c.amount,0)))*100}%; height:10px; background:var(--danger); border-radius:10px;"></div></div></div>
             `;
         }
 
+        // ==================== STUDENTS CRUD ====================
         function renderStudentsPage() {
             document.getElementById('mainContent').innerHTML = `
-                <div class="card"><div class="card-header"><h3>👨‍🎓 Talabalar</h3><button class="btn btn-primary" onclick="openStudentModal()">+ Qo'shish</button></div>
-                <input type="text" id="searchStudent" placeholder="Qidirish..." style="width:100%; margin-bottom:15px;" onkeyup="filterStudents()">
-                <table><thead><tr><th>ID</th><th>Ism</th><th>Fakultet</th><th>Guruh</th><th>Kurs</th><th>Telefon</th><th>Amallar</th></tr></thead><tbody id="studentsTableBody"></tbody></table></div>
+                <div class="card">
+                    <div class="card-header"><h3>👨‍🎓 ${t('students')}</h3><button class="btn btn-primary" onclick="openModal('student')">${t('add')}</button></div>
+                    <div class="search-box"><input type="text" id="searchStudent" placeholder="${t('search')}..." onkeyup="filterStudents()"><button class="btn btn-warning" onclick="document.getElementById('searchStudent').value='';filterStudents()">🔄 Tozalash</button></div>
+                    <div class="table-wrapper"><table id="studentsTable"><thead><tr><th>ID</th><th>Ism Familiya</th><th>Fakultet</th><th>Guruh</th><th>Kurs</th><th>Telefon</th><th>Email</th><th>Amallar</th></tr></thead><tbody id="studentsTableBody"></tbody></table></div>
+                </div>
             `;
             renderStudentsTable();
         }
 
         function renderStudentsTable(filter = '') {
-            let filtered = students.filter(s => s.fullName.toLowerCase().includes(filter) || s.id.includes(filter));
+            let filtered = students.filter(s => s.fullName.toLowerCase().includes(filter) || s.id.toLowerCase().includes(filter) || s.faculty.toLowerCase().includes(filter));
             document.getElementById('studentsTableBody').innerHTML = filtered.map(s => `
-                <tr><td>${s.id}</td><td>${s.fullName}</td><td>${s.faculty}</td><td>${s.groupId}</td><td>${s.course}</td><td>${s.phone}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editStudent('${s.id}')">✏️</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteStudent('${s.id}')">🗑️</button></td></tr>
+                <tr><td>${s.id}</td><td><strong>${escapeHtml(s.fullName)}</strong></td><td>${escapeHtml(s.faculty)}</td><td>${s.groupId}</td><td>${s.course}</td><td>${s.phone || '-'}</td><td>${s.email || '-'}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editStudent('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteStudent('${s.id}')">🗑️</button></td></tr>
             `).join('');
         }
 
         function filterStudents() { renderStudentsTable(document.getElementById('searchStudent')?.value.toLowerCase() || ''); }
 
-        function openStudentModal(student = null) {
-            document.getElementById('modalTitle').innerText = student ? 'Tahrirlash' : 'Yangi talaba';
-            document.getElementById('modalBody').innerHTML = `
-                <div class="form-group"><label>ID</label><input id="sId" value="${student?.id || ''}" ${student ? 'readonly' : ''}></div>
-                <div class="form-group"><label>Ism Familiya</label><input id="sName" value="${student?.fullName || ''}"></div>
-                <div class="form-group"><label>Fakultet</label><input id="sFaculty" value="${student?.faculty || ''}"></div>
-                <div class="form-group"><label>Guruh ID</label><input id="sGroup" value="${student?.groupId || ''}"></div>
-                <div class="form-group"><label>Kurs</label><input id="sCourse" value="${student?.course || ''}" type="number"></div>
-                <div class="form-group"><label>Telefon</label><input id="sPhone" value="${student?.phone || ''}"></div>
-                <div class="form-group"><label>Email</label><input id="sEmail" value="${student?.email || ''}"></div>
-                <div class="form-group"><label>Parol</label><input id="sPassword" value="${student?.password || ''}"></div>
+        function editStudent(id) { currentEditItem = students.find(s => s.id === id); openModal('student', currentEditItem); }
+        
+        async function deleteStudent(id) { 
+            if(confirm('⚠️ Rostdan ham bu talabani o\'chirmoqchimisiz?')) { 
+                students = students.filter(s => s.id !== id); 
+                grades = grades.filter(g => g.studentId !== id);
+                contracts = contracts.filter(c => c.studentId !== id);
+                payments = payments.filter(p => p.studentId !== id);
+                saveData(); 
+                renderStudentsTable();
+                showNotification('Talaba o\'chirildi');
+            } 
+        }
+
+        // ==================== TEACHERS CRUD ====================
+        function renderTeachersPage() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>👨‍🏫 ${t('teachers')}</h3><button class="btn btn-primary" onclick="openModal('teacher')">${t('add')}</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Ism Familiya</th><th>Lavozimi</th><th>Email</th><th>Telefon</th><th>Fanlar</th><th>Amallar</th></tr></thead><tbody id="teachersTableBody"></tbody></table></div></div>
             `;
-            window.modalStudent = student;
+            renderTeachersTable();
+        }
+
+        function renderTeachersTable() {
+            document.getElementById('teachersTableBody').innerHTML = teachers.map(t => `
+                <tr><td>${t.id}</td><td><strong>${escapeHtml(t.fullName)}</strong></td><td>${t.position || '-'}</td><td>${t.email}</td><td>${t.phone}</td>
+                <td>${(t.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name).join(', ') || '-'}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editTeacher('${t.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteTeacher('${t.id}')">🗑️</button></td></tr>
+            `).join('');
+        }
+
+        function editTeacher(id) { currentEditItem = teachers.find(t => t.id === id); openModal('teacher', currentEditItem); }
+        function deleteTeacher(id) { if(confirm('O\'chirilsinmi?')) { teachers = teachers.filter(t => t.id !== id); saveData(); renderTeachersTable(); showNotification('O\'qituvchi o\'chirildi'); } }
+
+        // ==================== SUBJECTS CRUD ====================
+        function renderSubjectsPage() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>📚 ${t('subjects')}</h3><button class="btn btn-primary" onclick="openModal('subject')">${t('add')}</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Fan nomi</th><th>Kod</th><th>Kredit</th><th>Semestr</th><th>O'qituvchi</th><th>Amallar</th></tr></thead><tbody id="subjectsTableBody"></tbody></table></div></div>
+            `;
+            renderSubjectsTable();
+        }
+
+        function renderSubjectsTable() {
+            document.getElementById('subjectsTableBody').innerHTML = subjects.map(s => `
+                <tr><td>${s.id}</td><td><strong>${escapeHtml(s.name)}</strong></td><td>${s.code || '-'}</td><td>${s.credits}</td><td>${s.semester || 1}</td>
+                <td>${teachers.find(t => t.id === s.teacherId)?.fullName || '-'}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editSubject('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteSubject('${s.id}')">🗑️</button></td></tr>
+            `).join('');
+        }
+
+        function editSubject(id) { currentEditItem = subjects.find(s => s.id === id); openModal('subject', currentEditItem); }
+        function deleteSubject(id) { if(confirm('O\'chirilsinmi?')) { subjects = subjects.filter(s => s.id !== id); saveData(); renderSubjectsTable(); showNotification('Fan o\'chirildi'); } }
+
+        // ==================== GROUPS CRUD ====================
+        function renderGroupsPage() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>👥 ${t('groups')}</h3><button class="btn btn-primary" onclick="openModal('group')">${t('add')}</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Guruh nomi</th><th>Fakultet</th><th>Kurs</th><th>Talabalar soni</th><th>Fanlar</th><th>Amallar</th></tr></thead><tbody id="groupsTableBody"></tbody></table></div></div>
+            `;
+            renderGroupsTable();
+        }
+
+        function renderGroupsTable() {
+            document.getElementById('groupsTableBody').innerHTML = groups.map(g => `
+                <tr><td>${g.id}</td><td><strong>${escapeHtml(g.name)}</strong></td><td>${g.faculty || '-'}</td><td>${g.course}</td><td>${students.filter(s => s.groupId === g.id).length}</td>
+                <td>${(g.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name).join(', ') || '-'}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editGroup('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGroup('${g.id}')">🗑️</button></td></tr>
+            `).join('');
+        }
+
+        function editGroup(id) { currentEditItem = groups.find(g => g.id === id); openModal('group', currentEditItem); }
+        function deleteGroup(id) { if(confirm('O\'chirilsinmi?')) { groups = groups.filter(g => g.id !== id); saveData(); renderGroupsTable(); showNotification('Guruh o\'chirildi'); } }
+
+        // ==================== GRADES CRUD ====================
+        function renderGradesPage() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>🎯 ${t('grades')}</h3><button class="btn btn-primary" onclick="openModal('grade')">${t('add')}</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>Talaba</th><th>Fan</th><th>1-baho</th><th>2-baho</th><th>Yakuniy</th><th>Jami</th><th>Harfi</th><th>Amallar</th></tr></thead><tbody id="gradesTableBody"></tbody></table></div></div>
+            `;
+            renderGradesTable();
+        }
+
+        function renderGradesTable() {
+            document.getElementById('gradesTableBody').innerHTML = grades.map(g => {
+                const student = students.find(s => s.id === g.studentId);
+                const subject = subjects.find(s => s.id === g.subjectId);
+                return `<tr><td>${student?.fullName || '-'}</td><td>${subject?.name || '-'}</td><td>${g.grade1}</td><td>${g.grade2}</td><td>${g.final}</td><td>${g.total || g.final}</td><td>${g.letter || '-'}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editGrade('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGrade('${g.id}')">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function editGrade(id) { currentEditItem = grades.find(g => g.id === id); openModal('grade', currentEditItem); }
+        function deleteGrade(id) { if(confirm('O\'chirilsinmi?')) { grades = grades.filter(g => g.id !== id); saveData(); renderGradesTable(); showNotification('Baho o\'chirildi'); } }
+
+        // ==================== SCHEDULE CRUD (Mukammal) ====================
+        function renderSchedulePage() {
+            const days = ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'];
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>📅 ${t('schedule')}</h3><button class="btn btn-primary" onclick="openModal('schedule')">${t('add')}</button></div>
+                <div class="search-box"><select id="scheduleGroupFilter" onchange="renderScheduleTable()"><option value="">Barcha guruhlar</option>${groups.map(g => `<option value="${g.id}">${g.name}</option>`).join('')}</select>
+                <select id="scheduleDayFilter" onchange="renderScheduleTable()"><option value="">Barcha kunlar</option>${days.map(d => `<option value="${d}">${d}</option>`).join('')}</select>
+                <button class="btn btn-info" onclick="renderScheduleTable()">🔍 Qidirish</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>Guruh</th><th>Fan</th><th>O'qituvchi</th><th>Kun</th><th>Vaqt</th><th>Xona</th><th>Tur</th><th>Amallar</th></tr></thead><tbody id="scheduleTableBody"></tbody></table></div></div>
+            `;
+            renderScheduleTable();
+        }
+
+        function renderScheduleTable() {
+            const groupFilter = document.getElementById('scheduleGroupFilter')?.value || '';
+            const dayFilter = document.getElementById('scheduleDayFilter')?.value || '';
+            let filtered = schedules;
+            if (groupFilter) filtered = filtered.filter(s => s.groupId === groupFilter);
+            if (dayFilter) filtered = filtered.filter(s => s.day === dayFilter);
+            
+            document.getElementById('scheduleTableBody').innerHTML = filtered.map(s => {
+                const group = groups.find(g => g.id === s.groupId);
+                const subject = subjects.find(sub => sub.id === s.subjectId);
+                const teacher = teachers.find(t => t.id === (s.teacherId || subject?.teacherId));
+                return `<tr><td>${group?.name || '-'}</td><td>${subject?.name || '-'}</td><td>${teacher?.fullName || '-'}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td><td>${s.type || 'Ma\'ruza'}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editSchedule('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteSchedule('${s.id}')">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function editSchedule(id) { currentEditItem = schedules.find(s => s.id === id); openModal('schedule', currentEditItem); }
+        function deleteSchedule(id) { if(confirm('Dars jadvalidan o\'chirilsinmi?')) { schedules = schedules.filter(s => s.id !== id); saveData(); renderScheduleTable(); showNotification('Dars jadvalidan o\'chirildi'); } }
+
+        // ==================== CONTRACTS & PAYMENTS ====================
+        function renderContractsPage() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>📄 ${t('contracts')}</h3><button class="btn btn-primary" onclick="openModal('contract')">${t('add')}</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>Talaba</th><th>Summa</th><th>To'langan</th><th>Qarz</th><th>Holat</th><th>Sana</th><th>Amallar</th></tr></thead><tbody id="contractsTableBody"></tbody></table></div></div>
+            `;
+            renderContractsTable();
+        }
+
+        function renderContractsTable() {
+            document.getElementById('contractsTableBody').innerHTML = contracts.map(c => {
+                const student = students.find(s => s.id === c.studentId);
+                return `<tr><td>${student?.fullName || '-'}</td><td>${c.amount.toLocaleString()} so'm</td><td>${c.paid.toLocaleString()} so'm</td><td style="color:${c.debt > 0 ? 'red' : 'green'}">${c.debt.toLocaleString()} so'm</td>
+                <td><span style="background:${c.status === 'to\'langan' ? '#10b981' : '#f59e0b'}; padding:4px 12px; border-radius:20px;">${c.status}</span></td>
+                <td>${c.date}</td>
+                <td><button class="btn btn-warning btn-sm" onclick="editContract('${c.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteContract('${c.id}')">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function editContract(id) { currentEditItem = contracts.find(c => c.id === id); openModal('contract', currentEditItem); }
+        function deleteContract(id) { if(confirm('O\'chirilsinmi?')) { contracts = contracts.filter(c => c.id !== id); saveData(); renderContractsTable(); showNotification('Shartnoma o\'chirildi'); } }
+
+        function renderPaymentsPage() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="card"><div class="card-header"><h3>💰 ${t('payments')}</h3><button class="btn btn-primary" onclick="openModal('payment')">${t('add')}</button></div>
+                <div class="table-wrapper"><table><thead><tr><th>Talaba</th><th>Summa</th><th>Sana</th><th>Tur</th><th>Holat</th><th>Amallar</th></tr></thead><tbody id="paymentsTableBody"></tbody></table></div></div>
+            `;
+            renderPaymentsTable();
+        }
+
+        function renderPaymentsTable() {
+            document.getElementById('paymentsTableBody').innerHTML = payments.map(p => {
+                const student = students.find(s => s.id === p.studentId);
+                return `<tr><td>${student?.fullName || '-'}</td><td>${p.amount.toLocaleString()} so'm</td><td>${p.date}</td><td>${p.type}</td><td><span style="background:#10b981; padding:4px 12px; border-radius:20px;">${p.status}</span></td>
+                <td><button class="btn btn-warning btn-sm" onclick="editPayment('${p.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deletePayment('${p.id}')">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function editPayment(id) { currentEditItem = payments.find(p => p.id === id); openModal('payment', currentEditItem); }
+        function deletePayment(id) { if(confirm('O\'chirilsinmi?')) { payments = payments.filter(p => p.id !== id); saveData(); renderPaymentsTable(); showNotification('To\'lov o\'chirildi'); } }
+
+        // ==================== STUDENT PAGES ====================
+        function renderStudentProfile() {
+            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>👤 ${t('profile')}</h3><div style="display:grid; gap:12px;"><p><strong>ID:</strong> ${currentUser.id}</p><p><strong>Ism Familiya:</strong> ${currentUser.fullName}</p><p><strong>Fakultet:</strong> ${currentUser.faculty}</p><p><strong>Guruh:</strong> ${currentUser.groupId}</p><p><strong>Kurs:</strong> ${currentUser.course}</p><p><strong>Telefon:</strong> ${currentUser.phone || '-'}</p><p><strong>Email:</strong> ${currentUser.email || '-'}</p><p><strong>Manzil:</strong> ${currentUser.address || '-'}</p></div></div>`;
+        }
+
+        function renderStudentGrades() {
+            const myGrades = grades.filter(g => g.studentId === currentUser.id);
+            const avg = myGrades.length > 0 ? (myGrades.reduce((s,g)=>s+g.final,0)/myGrades.length).toFixed(1) : 0;
+            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>🎓 ${t('myGrades')} (O'rtacha: ${avg})</h3><div class="table-wrapper"><table><thead><tr><th>Fan</th><th>1-baho</th><th>2-baho</th><th>Yakuniy</th><th>Harfi</th></tr></thead><tbody>
+            ${myGrades.map(g => `<tr><td>${subjects.find(s => s.id === g.subjectId)?.name}</td><td>${g.grade1}</td><td>${g.grade2}</td><td><strong>${g.final}</strong></td><td>${g.letter || '-'}</td></tr>`).join('')}
+            </tbody></table></div></div>`;
+        }
+
+        function renderStudentSchedule() {
+            const myGroup = groups.find(g => g.id === currentUser.groupId);
+            const mySchedules = schedules.filter(s => s.groupId === currentUser.groupId).sort((a,b)=>a.dayNum - b.dayNum);
+            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📅 ${t('mySchedule')} (${myGroup?.name})</h3><div class="table-wrapper"><table><thead><tr><th>Fan</th><th>Kun</th><th>Vaqt</th><th>Xona</th><th>O'qituvchi</th><th>Tur</th></tr></thead><tbody>
+            ${mySchedules.map(s => `<tr><td>${subjects.find(sub => sub.id === s.subjectId)?.name}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td><td>${teachers.find(t => t.id === (s.teacherId || subjects.find(sub=>sub.id===s.subjectId)?.teacherId))?.fullName || '-'}</td><td>${s.type || 'Ma\'ruza'}</td></tr>`).join('')}
+            </tbody></table></div></div>`;
+        }
+
+        function renderStudentContract() {
+            const contract = contracts.find(c => c.studentId === currentUser.id);
+            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📄 ${t('myContract')}</h3><div style="display:grid; gap:12px;"><p><strong>Shartnoma summa:</strong> ${contract?.amount?.toLocaleString() || '-'} so'm</p><p><strong>To'langan:</strong> ${contract?.paid?.toLocaleString() || 0} so'm</p><p><strong>Qarz:</strong> <span style="color:${(contract?.debt||0) > 0 ? 'red' : 'green'}">${contract?.debt?.toLocaleString() || 0} so'm</span></p><p><strong>Holat:</strong> <span style="background:${contract?.status === 'to\'langan' ? '#10b981' : '#f59e0b'}; padding:4px 12px; border-radius:20px;">${contract?.status || 'ma\'lumot yo\'q'}</span></p><p><strong>Imzolangan sana:</strong> ${contract?.date || '-'}</p></div></div>`;
+        }
+
+        function renderStudentPayments() {
+            const myPayments = payments.filter(p => p.studentId === currentUser.id);
+            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>💰 ${t('myPayments')}</h3><div class="table-wrapper"><table><thead><tr><th>Summa</th><th>Sana</th><th>Tur</th><th>Holat</th></tr></thead><tbody>
+            ${myPayments.map(p => `<tr><td>${p.amount.toLocaleString()} so'm</td><td>${p.date}</td><td>${p.type}</td><td><span style="background:#10b981; padding:4px 12px; border-radius:20px;">${p.status}</span></td></tr>`).join('')}
+            </tbody></table></div></div>`;
+        }
+
+        // ==================== MODAL SYSTEM (TO'LIQ CRUD) ====================
+        function openModal(type, item = null) {
+            currentModalType = type;
+            currentEditItem = item;
+            let html = '';
+            
+            if (type === 'student') {
+                html = `<div class="form-group"><label>ID *</label><input id="sId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="Masalan: ST001"></div>
+                <div class="form-group"><label>Ism Familiya *</label><input id="sName" value="${item?.fullName || ''}" placeholder="Alisher Karimov"></div>
+                <div class="form-row"><div class="form-group"><label>Fakultet</label><input id="sFaculty" value="${item?.faculty || ''}"></div>
+                <div class="form-group"><label>Guruh ID</label><input id="sGroup" value="${item?.groupId || ''}"></div></div>
+                <div class="form-row"><div class="form-group"><label>Kurs</label><input id="sCourse" value="${item?.course || ''}" type="number"></div>
+                <div class="form-group"><label>Telefon</label><input id="sPhone" value="${item?.phone || ''}"></div></div>
+                <div class="form-row"><div class="form-group"><label>Email</label><input id="sEmail" value="${item?.email || ''}"></div>
+                <div class="form-group"><label>Parol *</label><input id="sPassword" value="${item?.password || ''}" type="text"></div></div>
+                <div class="form-group"><label>Manzil</label><input id="sAddress" value="${item?.address || ''}"></div>`;
+            } else if (type === 'teacher') {
+                html = `<div class="form-group"><label>ID *</label><input id="tId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="T001"></div>
+                <div class="form-group"><label>Ism Familiya *</label><input id="tName" value="${item?.fullName || ''}"></div>
+                <div class="form-row"><div class="form-group"><label>Lavozimi</label><input id="tPosition" value="${item?.position || ''}"></div>
+                <div class="form-group"><label>Telefon</label><input id="tPhone" value="${item?.phone || ''}"></div></div>
+                <div class="form-row"><div class="form-group"><label>Email</label><input id="tEmail" value="${item?.email || ''}"></div>
+                <div class="form-group"><label>Parol</label><input id="tPassword" value="${item?.password || ''}" type="text"></div></div>`;
+            } else if (type === 'subject') {
+                html = `<div class="form-group"><label>ID *</label><input id="subId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="SUB001"></div>
+                <div class="form-group"><label>Fan nomi *</label><input id="subName" value="${item?.name || ''}"></div>
+                <div class="form-row"><div class="form-group"><label>Kod</label><input id="subCode" value="${item?.code || ''}"></div>
+                <div class="form-group"><label>Kredit</label><input id="subCredits" value="${item?.credits || 3}" type="number"></div></div>
+                <div class="form-row"><div class="form-group"><label>Semestr</label><input id="subSemester" value="${item?.semester || 1}" type="number"></div>
+                <div class="form-group"><label>O'qituvchi</label><select id="subTeacher">${teachers.map(t => `<option value="${t.id}" ${item?.teacherId === t.id ? 'selected' : ''}>${t.fullName}</option>`).join('')}</select></div></div>`;
+            } else if (type === 'group') {
+                html = `<div class="form-group"><label>ID *</label><input id="gId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="GRP001"></div>
+                <div class="form-group"><label>Guruh nomi *</label><input id="gName" value="${item?.name || ''}"></div>
+                <div class="form-row"><div class="form-group"><label>Fakultet</label><input id="gFaculty" value="${item?.faculty || ''}"></div>
+                <div class="form-group"><label>Kurs</label><input id="gCourse" value="${item?.course || 1}" type="number"></div></div>
+                <div class="form-group"><label>Fanlar (ID vergul bilan)</label><input id="gSubjects" value="${(item?.subjectIds || []).join(',')}" placeholder="SUB001,SUB002"></div>`;
+            } else if (type === 'grade') {
+                html = `<div class="form-group"><label>Talaba</label><select id="grStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName}</option>`).join('')}</select></div>
+                <div class="form-group"><label>Fan</label><select id="grSubject">${subjects.map(s => `<option value="${s.id}" ${item?.subjectId === s.id ? 'selected' : ''}>${s.name}</option>`).join('')}</select></div>
+                <div class="form-row"><div class="form-group"><label>1-baho</label><input id="gr1" value="${item?.grade1 || 0}" type="number" min="0" max="100"></div>
+                <div class="form-group"><label>2-baho</label><input id="gr2" value="${item?.grade2 || 0}" type="number" min="0" max="100"></div></div>
+                <div class="form-group"><label>Yakuniy</label><input id="grFinal" value="${item?.final || 0}" type="number" min="0" max="100"></div>`;
+            } else if (type === 'schedule') {
+                html = `<div class="form-group"><label>Guruh</label><select id="schGroup">${groups.map(g => `<option value="${g.id}" ${item?.groupId === g.id ? 'selected' : ''}>${g.name}</option>`).join('')}</select></div>
+                <div class="form-group"><label>Fan</label><select id="schSubject">${subjects.map(s => `<option value="${s.id}" ${item?.subjectId === s.id ? 'selected' : ''}>${s.name}</option>`).join('')}</select></div>
+                <div class="form-row"><div class="form-group"><label>Kun</label><select id="schDay"><option>Dushanba</option><option>Seshanba</option><option>Chorshanba</option><option>Payshanba</option><option>Juma</option><option>Shanba</option></select></div>
+                <div class="form-group"><label>Vaqt</label><input id="schTime" value="${item?.time || '09:00-10:30'}" placeholder="09:00-10:30"></div></div>
+                <div class="form-row"><div class="form-group"><label>Xona</label><input id="schRoom" value="${item?.room || ''}"></div>
+                <div class="form-group"><label>Tur</label><select id="schType"><option>Ma\'ruza</option><option>Amaliyot</option><option>Laboratoriya</option></select></div></div>`;
+            } else if (type === 'contract') {
+                html = `<div class="form-group"><label>Talaba</label><select id="cStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName}</option>`).join('')}</select></div>
+                <div class="form-row"><div class="form-group"><label>Summa</label><input id="cAmount" value="${item?.amount || 0}" type="number"></div>
+                <div class="form-group"><label>To'langan</label><input id="cPaid" value="${item?.paid || 0}" type="number"></div></div>
+                <div class="form-row"><div class="form-group"><label>Sana</label><input id="cDate" value="${item?.date || new Date().toISOString().split('T')[0]}" type="date"></div>
+                <div class="form-group"><label>Holat</label><select id="cStatus"><option>to\'langan</option><option>qisman</option><option>qarz</option></select></div></div>`;
+            } else if (type === 'payment') {
+                html = `<div class="form-group"><label>Talaba</label><select id="pStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName}</option>`).join('')}</select></div>
+                <div class="form-row"><div class="form-group"><label>Summa</label><input id="pAmount" value="${item?.amount || 0}" type="number"></div>
+                <div class="form-group"><label>Sana</label><input id="pDate" value="${item?.date || new Date().toISOString().split('T')[0]}" type="date"></div></div>
+                <div class="form-row"><div class="form-group"><label>Tur</label><select id="pType"><option>Kontrakt</option><option>Boshqa</option></select></div>
+                <div class="form-group"><label>Holat</label><select id="pStatus"><option>tasdiqlangan</option><option>kutilmoqda</option></select></div></div>`;
+            }
+            
+            document.getElementById('modalTitle').innerHTML = item ? `✏️ ${t('edit')} ${type}` : `➕ ${t('add')} ${type}`;
+            document.getElementById('modalBody').innerHTML = html;
             document.getElementById('modal').style.display = 'flex';
         }
 
         function saveModal() {
-            if (document.getElementById('modalTitle').innerText.includes('talaba')) {
-                const student = window.modalStudent;
+            if (currentModalType === 'student') {
                 const data = {
                     id: document.getElementById('sId').value,
                     fullName: document.getElementById('sName').value,
                     faculty: document.getElementById('sFaculty').value,
                     groupId: document.getElementById('sGroup').value,
-                    course: parseInt(document.getElementById('sCourse').value),
+                    course: parseInt(document.getElementById('sCourse').value) || 1,
                     phone: document.getElementById('sPhone').value,
                     email: document.getElementById('sEmail').value,
-                    password: document.getElementById('sPassword').value
+                    password: document.getElementById('sPassword').value,
+                    address: document.getElementById('sAddress').value
                 };
-                if (student) {
-                    const index = students.findIndex(s => s.id === student.id);
+                if (currentEditItem) {
+                    const index = students.findIndex(s => s.id === currentEditItem.id);
                     if (index !== -1) students[index] = data;
                 } else {
+                    if (students.find(s => s.id === data.id)) { showNotification('Bu ID allaqachon mavjud!', 'error'); return; }
                     students.push(data);
                 }
                 saveData();
                 renderStudentsTable();
+                showNotification('Talaba saqlandi');
+            } else if (currentModalType === 'teacher') {
+                const data = {
+                    id: document.getElementById('tId').value,
+                    fullName: document.getElementById('tName').value,
+                    position: document.getElementById('tPosition').value,
+                    phone: document.getElementById('tPhone').value,
+                    email: document.getElementById('tEmail').value,
+                    password: document.getElementById('tPassword').value,
+                    subjectIds: []
+                };
+                if (currentEditItem) {
+                    const index = teachers.findIndex(t => t.id === currentEditItem.id);
+                    if (index !== -1) teachers[index] = data;
+                } else {
+                    teachers.push(data);
+                }
+                saveData();
+                renderTeachersTable();
+                showNotification('O\'qituvchi saqlandi');
+            } else if (currentModalType === 'subject') {
+                const data = {
+                    id: document.getElementById('subId').value,
+                    name: document.getElementById('subName').value,
+                    code: document.getElementById('subCode').value,
+                    credits: parseInt(document.getElementById('subCredits').value) || 3,
+                    semester: parseInt(document.getElementById('subSemester').value) || 1,
+                    teacherId: document.getElementById('subTeacher').value
+                };
+                if (currentEditItem) {
+                    const index = subjects.findIndex(s => s.id === currentEditItem.id);
+                    if (index !== -1) subjects[index] = data;
+                } else {
+                    subjects.push(data);
+                }
+                saveData();
+                renderSubjectsTable();
+                showNotification('Fan saqlandi');
+            } else if (currentModalType === 'group') {
+                const data = {
+                    id: document.getElementById('gId').value,
+                    name: document.getElementById('gName').value,
+                    faculty: document.getElementById('gFaculty').value,
+                    course: parseInt(document.getElementById('gCourse').value) || 1,
+                    subjectIds: document.getElementById('gSubjects').value.split(',').map(s => s.trim()).filter(s => s)
+                };
+                if (currentEditItem) {
+                    const index = groups.findIndex(g => g.id === currentEditItem.id);
+                    if (index !== -1) groups[index] = data;
+                } else {
+                    groups.push(data);
+                }
+                saveData();
+                renderGroupsTable();
+                showNotification('Guruh saqlandi');
+            } else if (currentModalType === 'grade') {
+                const data = {
+                    id: currentEditItem?.id || 'GRD' + Date.now(),
+                    studentId: document.getElementById('grStudent').value,
+                    subjectId: document.getElementById('grSubject').value,
+                    grade1: parseInt(document.getElementById('gr1').value) || 0,
+                    grade2: parseInt(document.getElementById('gr2').value) || 0,
+                    final: parseInt(document.getElementById('grFinal').value) || 0,
+                    total: parseInt(document.getElementById('grFinal').value) || 0,
+                    letter: getLetterGrade(parseInt(document.getElementById('grFinal').value) || 0)
+                };
+                if (currentEditItem) {
+                    const index = grades.findIndex(g => g.id === currentEditItem.id);
+                    if (index !== -1) grades[index] = data;
+                } else {
+                    grades.push(data);
+                }
+                saveData();
+                renderGradesTable();
+                showNotification('Baho saqlandi');
+            } else if (currentModalType === 'schedule') {
+                const data = {
+                    id: currentEditItem?.id || 'SCH' + Date.now(),
+                    groupId: document.getElementById('schGroup').value,
+                    subjectId: document.getElementById('schSubject').value,
+                    day: document.getElementById('schDay').value,
+                    dayNum: getDayNum(document.getElementById('schDay').value),
+                    time: document.getElementById('schTime').value,
+                    room: document.getElementById('schRoom').value,
+                    type: document.getElementById('schType').value,
+                    teacherId: subjects.find(s => s.id === document.getElementById('schSubject').value)?.teacherId
+                };
+                if (currentEditItem) {
+                    const index = schedules.findIndex(s => s.id === currentEditItem.id);
+                    if (index !== -1) schedules[index] = data;
+                } else {
+                    schedules.push(data);
+                }
+                saveData();
+                renderScheduleTable();
+                showNotification('Dars jadvali saqlandi');
+            } else if (currentModalType === 'contract') {
+                const amount = parseInt(document.getElementById('cAmount').value) || 0;
+                const paid = parseInt(document.getElementById('cPaid').value) || 0;
+                const data = {
+                    id: currentEditItem?.id || 'CNT' + Date.now(),
+                    studentId: document.getElementById('cStudent').value,
+                    amount: amount,
+                    paid: paid,
+                    debt: amount - paid,
+                    status: document.getElementById('cStatus').value,
+                    date: document.getElementById('cDate').value
+                };
+                if (currentEditItem) {
+                    const index = contracts.findIndex(c => c.id === currentEditItem.id);
+                    if (index !== -1) contracts[index] = data;
+                } else {
+                    contracts.push(data);
+                }
+                saveData();
+                renderContractsTable();
+                showNotification('Shartnoma saqlandi');
+            } else if (currentModalType === 'payment') {
+                const data = {
+                    id: currentEditItem?.id || 'PAY' + Date.now(),
+                    studentId: document.getElementById('pStudent').value,
+                    amount: parseInt(document.getElementById('pAmount').value) || 0,
+                    date: document.getElementById('pDate').value,
+                    type: document.getElementById('pType').value,
+                    status: document.getElementById('pStatus').value
+                };
+                if (currentEditItem) {
+                    const index = payments.findIndex(p => p.id === currentEditItem.id);
+                    if (index !== -1) payments[index] = data;
+                } else {
+                    payments.push(data);
+                }
+                saveData();
+                renderPaymentsTable();
+                showNotification('To\'lov saqlandi');
             }
             closeModal();
         }
 
-        function editStudent(id) { openStudentModal(students.find(s => s.id === id)); }
-        function deleteStudent(id) { if(confirm('Ochirilsinmi?')) { students = students.filter(s => s.id !== id); saveData(); renderStudentsTable(); } }
-
-        function renderTeachersPage() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>👨‍🏫 O'qituvchilar</h3><table><tr><th>ID</th><th>Ism</th><th>Email</th><th>Telefon</th></tr>
-            ${teachers.map(t => `<tr><td>${t.id}</td><td>${t.fullName}</td><td>${t.email}</td><td>${t.phone}</td></tr>`).join('')}</table></div>`;
+        function getLetterGrade(score) {
+            if (score >= 90) return 'A';
+            if (score >= 80) return 'B';
+            if (score >= 70) return 'C';
+            if (score >= 60) return 'D';
+            return 'F';
         }
 
-        function renderSubjectsPage() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📚 Fanlar</h3><table><tr><th>ID</th><th>Fan nomi</th><th>Kredit</th><th>O'qituvchi</th></tr>
-            ${subjects.map(s => `<tr><td>${s.id}</td><td>${s.name}</td><td>${s.credits}</td><td>${teachers.find(t => t.id === s.teacherId)?.fullName || '-'}</td></tr>`).join('')}</table></div>`;
+        function getDayNum(day) {
+            const days = { 'Dushanba': 1, 'Seshanba': 2, 'Chorshanba': 3, 'Payshanba': 4, 'Juma': 5, 'Shanba': 6 };
+            return days[day] || 1;
         }
 
-        function renderGroupsPage() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>👥 Guruhlar</h3><table><tr><th>ID</th><th>Nomi</th><th>Kurs</th><th>Fanlar</th></tr>
-            ${groups.map(g => `<tr><td>${g.id}</td><td>${g.name}</td><td>${g.course}</td><td>${g.subjectIds.map(sid => subjects.find(s => s.id === sid)?.name).join(', ')}</td></tr>`).join('')}</table></div>`;
-        }
-
-        function renderGradesPage() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>🎯 Baholar</h3><table><tr><th>Talaba</th><th>Fan</th><th>1-baho</th><th>2-baho</th><th>Yakuniy</th></tr>
-            ${grades.map(g => `<tr><td>${students.find(s => s.id === g.studentId)?.fullName}</td><td>${subjects.find(s => s.id === g.subjectId)?.name}</td><td>${g.grade1}</td><td>${g.grade2}</td><td>${g.final}</td></tr>`).join('')}</table></div>`;
-        }
-
-        function renderSchedulePage() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📅 Dars jadvali</h3><table><tr><th>Guruh</th><th>Fan</th><th>Kun</th><th>Vaqt</th><th>Xona</th></tr>
-            ${schedules.map(s => `<tr><td>${groups.find(g => g.id === s.groupId)?.name}</td><td>${subjects.find(sub => sub.id === s.subjectId)?.name}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td></tr>`).join('')}</table></div>`;
-        }
-
-        function renderContractsPage() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📄 Shartnomalar</h3><table><tr><th>Talaba</th><th>Summa</th><th>To'langan</th><th>Holat</th></tr>
-            ${contracts.map(c => `<tr><td>${students.find(s => s.id === c.studentId)?.fullName}</td><td>${c.amount}</td><td>${c.paid}</td><td>${c.status}</td></tr>`).join('')}</table></div>`;
-        }
-
-        // ==================== STUDENT PAGES ====================
-        function renderStudentProfile() {
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>👤 Shaxsiy ma'lumotlar</h3>
-            <p><strong>ID:</strong> ${currentUser.id}</p><p><strong>Ism:</strong> ${currentUser.fullName}</p>
-            <p><strong>Fakultet:</strong> ${currentUser.faculty}</p><p><strong>Guruh:</strong> ${currentUser.groupId}</p>
-            <p><strong>Kurs:</strong> ${currentUser.course}</p><p><strong>Telefon:</strong> ${currentUser.phone}</p>
-            <p><strong>Email:</strong> ${currentUser.email}</p></div>`;
-        }
-
-        function renderStudentGrades() {
-            const myGrades = grades.filter(g => g.studentId === currentUser.id);
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>🎯 Baholarim</h3><table><tr><th>Fan</th><th>1-baho</th><th>2-baho</th><th>Yakuniy</th></tr>
-            ${myGrades.map(g => `<tr><td>${subjects.find(s => s.id === g.subjectId)?.name}</td><td>${g.grade1}</td><td>${g.grade2}</td><td>${g.final}</td></tr>`).join('')}</table></div>`;
-        }
-
-        function renderStudentSchedule() {
-            const myGroup = groups.find(g => g.id === currentUser.groupId);
-            const mySchedules = schedules.filter(s => s.groupId === currentUser.groupId);
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📅 Dars jadvalim (${myGroup?.name})</h3><table><tr><th>Fan</th><th>Kun</th><th>Vaqt</th><th>Xona</th></tr>
-            ${mySchedules.map(s => `<tr><td>${subjects.find(sub => sub.id === s.subjectId)?.name}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td></tr>`).join('')}</table></div>`;
-        }
-
-        function renderStudentContract() {
-            const contract = contracts.find(c => c.studentId === currentUser.id);
-            document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📄 Shartnoma</h3>
-            <p><strong>Summa:</strong> ${contract?.amount || '-'} so'm</p>
-            <p><strong>To'langan:</strong> ${contract?.paid || 0} so'm</p>
-            <p><strong>Holat:</strong> ${contract?.status || 'ma\'lumot yo\'q'}</p></div>`;
-        }
-
-        // ==================== UTILITIES ====================
-        function changeLanguage() {
-            currentLang = document.getElementById('languageSelect').value;
-            if (currentUser) {
-                renderSidebar();
-                loadPage(currentPage);
-            }
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+        function changeLanguage() { currentLang = document.getElementById('languageSelect').value; if (currentUser) { renderSidebar(); loadPage(currentPage); } }
+        function toggleTheme() { document.body.classList.toggle('dark'); }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; currentEditItem = null; }
 
         // ==================== INIT ====================
         initData();
