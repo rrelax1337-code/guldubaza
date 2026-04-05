@@ -2,8 +2,8 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>GulduBaza  | HEMIS Tizim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GulduBaza Pro | HEMIS Mukammal Tizim</title>
     <style>
         * {
             margin: 0;
@@ -427,7 +427,11 @@
             <input type="text" id="loginId" placeholder="Login yoki Talaba ID">
             <input type="password" id="loginPassword" placeholder="Parol">
             <button onclick="login()">🔐 Kirish</button>
-            <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--gray);">Admin: admin / admin123 | Talaba: ST001 / 12345</p>
+            <div style="text-align: center; margin-top: 20px; font-size: 12px; padding: 12px; background: var(--primary-light); border-radius: 12px;">
+                <strong>ℹ️ Ma'lumot:</strong><br>
+                Admin: admin / admin123<br>
+                Talaba: ST001 / 12345
+            </div>
         </div>
     </div>
 
@@ -525,7 +529,7 @@
         // ==================== DATA INIT ====================
         function initData() {
             if (!localStorage.getItem('guldu_pro_data')) {
-                // Talabalar
+                // Talabalar - ID avtomatik formatda
                 students = [
                     { id: 'ST001', fullName: 'Alisher Karimov', faculty: 'Axborot texnologiyalari', groupId: 'GRP001', course: 3, phone: '+998901234567', email: 'alisher@student.uz', password: '12345', address: 'Guliston shahar' },
                     { id: 'ST002', fullName: 'Dilnoza Rahimova', faculty: 'Iqtisodiyot', groupId: 'GRP002', course: 2, phone: '+998902345678', email: 'dilnoza@student.uz', password: '12345', address: 'Sirdaryo tuman' },
@@ -557,7 +561,7 @@
                     { id: 'GRD003', studentId: 'ST002', subjectId: 'SUB003', grade1: 92, grade2: 88, final: 90, total: 90, letter: 'A' },
                     { id: 'GRD004', studentId: 'ST003', subjectId: 'SUB004', grade1: 88, grade2: 85, final: 87, total: 87, letter: 'B' }
                 ];
-                // Dars jadvali (hafta kunlari bo'yicha)
+                // Dars jadvali
                 schedules = [
                     { id: 'SCH001', groupId: 'GRP001', subjectId: 'SUB001', day: 'Dushanba', dayNum: 1, time: '09:00-10:30', room: '101', teacherId: 'T001', type: 'Ma\'ruza' },
                     { id: 'SCH002', groupId: 'GRP001', subjectId: 'SUB002', day: 'Chorshanba', dayNum: 3, time: '11:00-12:30', room: '203', teacherId: 'T001', type: 'Amaliyot' },
@@ -582,6 +586,14 @@
             } else {
                 loadData();
             }
+        }
+
+        // Yangi student ID avtomatik yaratish
+        function generateStudentId() {
+            if (students.length === 0) return 'ST001';
+            const maxNum = Math.max(...students.map(s => parseInt(s.id.replace('ST', ''))));
+            const newNum = maxNum + 1;
+            return `ST${String(newNum).padStart(3, '0')}`;
         }
 
         function saveData() {
@@ -631,7 +643,7 @@
                     errorDiv.style.display = 'none';
                     showNotification('Xush kelibsiz, Administrator!');
                 } else {
-                    errorDiv.textContent = '❌ Admin login yoki parol noto\'g\'ri! (admin / admin)';
+                    errorDiv.textContent = '❌ Admin login yoki parol noto\'g\'ri!';
                     errorDiv.style.display = 'block';
                 }
             } else {
@@ -642,7 +654,7 @@
                     errorDiv.style.display = 'none';
                     showNotification(`Xush kelibsiz, ${student.fullName}!`);
                 } else {
-                    errorDiv.textContent = '❌ Talaba ID yoki parol noto\'g\'ri! (Masalan: ST001 / 12345)';
+                    errorDiv.textContent = '❌ Talaba ID yoki parol noto\'g\'ri!';
                     errorDiv.style.display = 'block';
                 }
             }
@@ -740,14 +752,14 @@
                 <div class="card">
                     <div class="card-header"><h3>📈 So'nggi qo'shilgan talabalar</h3><button class="btn btn-primary" onclick="loadPage('students')">${t('add')}</button></div>
                     <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Ism Familiya</th><th>Fakultet</th><th>Guruh</th><th>Kurs</th></tr></thead><tbody>
-                    ${students.slice(0,5).map(s => `<tr><td>${s.id}</td><td><strong>${escapeHtml(s.fullName)}</strong></td><td>${s.faculty}</td><td>${s.groupId}</td><td>${s.course}-kurs</td></tr>`).join('')}
+                    ${students.slice(0,5).map(s => `<tr><td>${s.id}</td><td><strong>${escapeHtml(s.fullName)}</strong></td><td>${s.faculty}</td><td>${s.groupId}</td><td>${s.course}-kurs</td>`).join('')}
                     </tbody></table></div>
                 </div>
                 <div class="card"><h3>💰 To'lov statistikasi</h3><p>Jami qarz: ${totalDebt.toLocaleString()} so'm</p><div style="height:10px; background:var(--border); border-radius:10px; margin-top:10px;"><div style="width:${(totalDebt/(contracts.reduce((s,c)=>s+c.amount,0)))*100}%; height:10px; background:var(--danger); border-radius:10px;"></div></div></div>
             `;
         }
 
-        // ==================== STUDENTS CRUD ====================
+        // ==================== STUDENTS CRUD (ID AVTOMATIK) ====================
         function renderStudentsPage() {
             document.getElementById('mainContent').innerHTML = `
                 <div class="card">
@@ -762,8 +774,16 @@
         function renderStudentsTable(filter = '') {
             let filtered = students.filter(s => s.fullName.toLowerCase().includes(filter) || s.id.toLowerCase().includes(filter) || s.faculty.toLowerCase().includes(filter));
             document.getElementById('studentsTableBody').innerHTML = filtered.map(s => `
-                <tr><td>${s.id}</td><td><strong>${escapeHtml(s.fullName)}</strong></td><td>${escapeHtml(s.faculty)}</td><td>${s.groupId}</td><td>${s.course}</td><td>${s.phone || '-'}</td><td>${s.email || '-'}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editStudent('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteStudent('${s.id}')">🗑️</button></td></tr>
+                <tr>
+                    <td>${s.id}</td>
+                    <td><strong>${escapeHtml(s.fullName)}</strong></td>
+                    <td>${escapeHtml(s.faculty)}</td>
+                    <td>${s.groupId}</td>
+                    <td>${s.course}</td>
+                    <td>${s.phone || '-'}</td>
+                    <td>${s.email || '-'}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editStudent('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteStudent('${s.id}')">🗑️</button></td>
+                </tr>
             `).join('');
         }
 
@@ -794,9 +814,15 @@
 
         function renderTeachersTable() {
             document.getElementById('teachersTableBody').innerHTML = teachers.map(t => `
-                <tr><td>${t.id}</td><td><strong>${escapeHtml(t.fullName)}</strong></td><td>${t.position || '-'}</td><td>${t.email}</td><td>${t.phone}</td>
-                <td>${(t.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name).join(', ') || '-'}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editTeacher('${t.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteTeacher('${t.id}')">🗑️</button></td></tr>
+                <tr>
+                    <td>${t.id}</td>
+                    <td><strong>${escapeHtml(t.fullName)}</strong></td>
+                    <td>${t.position || '-'}</td>
+                    <td>${t.email}</td>
+                    <td>${t.phone}</td>
+                    <td>${(t.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name).join(', ') || '-'}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editTeacher('${t.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteTeacher('${t.id}')">🗑️</button></td>
+                </tr>
             `).join('');
         }
 
@@ -814,9 +840,15 @@
 
         function renderSubjectsTable() {
             document.getElementById('subjectsTableBody').innerHTML = subjects.map(s => `
-                <tr><td>${s.id}</td><td><strong>${escapeHtml(s.name)}</strong></td><td>${s.code || '-'}</td><td>${s.credits}</td><td>${s.semester || 1}</td>
-                <td>${teachers.find(t => t.id === s.teacherId)?.fullName || '-'}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editSubject('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteSubject('${s.id}')">🗑️</button></td></tr>
+                <tr>
+                    <td>${s.id}</td>
+                    <td><strong>${escapeHtml(s.name)}</strong></td>
+                    <td>${s.code || '-'}</td>
+                    <td>${s.credits}</td>
+                    <td>${s.semester || 1}</td>
+                    <td>${teachers.find(t => t.id === s.teacherId)?.fullName || '-'}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editSubject('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteSubject('${s.id}')">🗑️</button></td>
+                </tr>
             `).join('');
         }
 
@@ -834,9 +866,15 @@
 
         function renderGroupsTable() {
             document.getElementById('groupsTableBody').innerHTML = groups.map(g => `
-                <tr><td>${g.id}</td><td><strong>${escapeHtml(g.name)}</strong></td><td>${g.faculty || '-'}</td><td>${g.course}</td><td>${students.filter(s => s.groupId === g.id).length}</td>
-                <td>${(g.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name).join(', ') || '-'}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editGroup('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGroup('${g.id}')">🗑️</button></td></tr>
+                <tr>
+                    <td>${g.id}</td>
+                    <td><strong>${escapeHtml(g.name)}</strong></td>
+                    <td>${g.faculty || '-'}</td>
+                    <td>${g.course}</td>
+                    <td>${students.filter(s => s.groupId === g.id).length}</td>
+                    <td>${(g.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name).join(', ') || '-'}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editGroup('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGroup('${g.id}')">🗑️</button></td>
+                </tr>
             `).join('');
         }
 
@@ -856,15 +894,23 @@
             document.getElementById('gradesTableBody').innerHTML = grades.map(g => {
                 const student = students.find(s => s.id === g.studentId);
                 const subject = subjects.find(s => s.id === g.subjectId);
-                return `<tr><td>${student?.fullName || '-'}</td><td>${subject?.name || '-'}</td><td>${g.grade1}</td><td>${g.grade2}</td><td>${g.final}</td><td>${g.total || g.final}</td><td>${g.letter || '-'}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editGrade('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGrade('${g.id}')">🗑️</button></td></tr>`;
+                return `<tr>
+                    <td>${student?.fullName || '-'}</td>
+                    <td>${subject?.name || '-'}</td>
+                    <td>${g.grade1}</td>
+                    <td>${g.grade2}</td>
+                    <td>${g.final}</td>
+                    <td>${g.total || g.final}</td>
+                    <td>${g.letter || '-'}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editGrade('${g.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteGrade('${g.id}')">🗑️</button></td>
+                </tr>`;
             }).join('');
         }
 
         function editGrade(id) { currentEditItem = grades.find(g => g.id === id); openModal('grade', currentEditItem); }
         function deleteGrade(id) { if(confirm('O\'chirilsinmi?')) { grades = grades.filter(g => g.id !== id); saveData(); renderGradesTable(); showNotification('Baho o\'chirildi'); } }
 
-        // ==================== SCHEDULE CRUD (Mukammal) ====================
+        // ==================== SCHEDULE CRUD ====================
         function renderSchedulePage() {
             const days = ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'];
             document.getElementById('mainContent').innerHTML = `
@@ -888,8 +934,16 @@
                 const group = groups.find(g => g.id === s.groupId);
                 const subject = subjects.find(sub => sub.id === s.subjectId);
                 const teacher = teachers.find(t => t.id === (s.teacherId || subject?.teacherId));
-                return `<tr><td>${group?.name || '-'}</td><td>${subject?.name || '-'}</td><td>${teacher?.fullName || '-'}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td><td>${s.type || 'Ma\'ruza'}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editSchedule('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteSchedule('${s.id}')">🗑️</button></td></tr>`;
+                return `<tr>
+                    <td>${group?.name || '-'}</td>
+                    <td>${subject?.name || '-'}</td>
+                    <td>${teacher?.fullName || '-'}</td>
+                    <td>${s.day}</td>
+                    <td>${s.time}</td>
+                    <td>${s.room}</td>
+                    <td>${s.type || 'Ma\'ruza'}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editSchedule('${s.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteSchedule('${s.id}')">🗑️</button></td>
+                </tr>`;
             }).join('');
         }
 
@@ -900,7 +954,7 @@
         function renderContractsPage() {
             document.getElementById('mainContent').innerHTML = `
                 <div class="card"><div class="card-header"><h3>📄 ${t('contracts')}</h3><button class="btn btn-primary" onclick="openModal('contract')">${t('add')}</button></div>
-                <div class="table-wrapper"><table><thead><tr><th>Talaba</th><th>Summa</th><th>To'langan</th><th>Qarz</th><th>Holat</th><th>Sana</th><th>Amallar</th></tr></thead><tbody id="contractsTableBody"></tbody></table></div></div>
+                <div class="table-wrapper"><tr><thead><tr><th>Talaba</th><th>Summa</th><th>To'langan</th><th>Qarz</th><th>Holat</th><th>Sana</th><th>Amallar</th></tr></thead><tbody id="contractsTableBody"></tbody></table></div></div>
             `;
             renderContractsTable();
         }
@@ -908,10 +962,15 @@
         function renderContractsTable() {
             document.getElementById('contractsTableBody').innerHTML = contracts.map(c => {
                 const student = students.find(s => s.id === c.studentId);
-                return `<tr><td>${student?.fullName || '-'}</td><td>${c.amount.toLocaleString()} so'm</td><td>${c.paid.toLocaleString()} so'm</td><td style="color:${c.debt > 0 ? 'red' : 'green'}">${c.debt.toLocaleString()} so'm</td>
-                <td><span style="background:${c.status === 'to\'langan' ? '#10b981' : '#f59e0b'}; padding:4px 12px; border-radius:20px;">${c.status}</span></td>
-                <td>${c.date}</td>
-                <td><button class="btn btn-warning btn-sm" onclick="editContract('${c.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteContract('${c.id}')">🗑️</button></td></tr>`;
+                return `<tr>
+                    <td>${student?.fullName || '-'}</td>
+                    <td>${c.amount.toLocaleString()} so'm</td>
+                    <td>${c.paid.toLocaleString()} so'm</td>
+                    <td style="color:${c.debt > 0 ? 'red' : 'green'}">${c.debt.toLocaleString()} so'm</td>
+                    <td><span style="background:${c.status === 'to\'langan' ? '#10b981' : '#f59e0b'}; padding:4px 12px; border-radius:20px;">${c.status}</span></td>
+                    <td>${c.date}</td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editContract('${c.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteContract('${c.id}')">🗑️</button></td>
+                </tr>`;
             }).join('');
         }
 
@@ -929,8 +988,14 @@
         function renderPaymentsTable() {
             document.getElementById('paymentsTableBody').innerHTML = payments.map(p => {
                 const student = students.find(s => s.id === p.studentId);
-                return `<tr><td>${student?.fullName || '-'}</td><td>${p.amount.toLocaleString()} so'm</td><td>${p.date}</td><td>${p.type}</td><td><span style="background:#10b981; padding:4px 12px; border-radius:20px;">${p.status}</span></td>
-                <td><button class="btn btn-warning btn-sm" onclick="editPayment('${p.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deletePayment('${p.id}')">🗑️</button></td></tr>`;
+                return `<tr>
+                    <td>${student?.fullName || '-'}</td>
+                    <td>${p.amount.toLocaleString()} so'm</td>
+                    <td>${p.date}</td>
+                    <td>${p.type}</td>
+                    <td><span style="background:#10b981; padding:4px 12px; border-radius:20px;">${p.status}</span></td>
+                    <td><button class="btn btn-warning btn-sm" onclick="editPayment('${p.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deletePayment('${p.id}')">🗑️</button></td>
+                </tr>`;
             }).join('');
         }
 
@@ -946,7 +1011,7 @@
             const myGrades = grades.filter(g => g.studentId === currentUser.id);
             const avg = myGrades.length > 0 ? (myGrades.reduce((s,g)=>s+g.final,0)/myGrades.length).toFixed(1) : 0;
             document.getElementById('mainContent').innerHTML = `<div class="card"><h3>🎓 ${t('myGrades')} (O'rtacha: ${avg})</h3><div class="table-wrapper"><table><thead><tr><th>Fan</th><th>1-baho</th><th>2-baho</th><th>Yakuniy</th><th>Harfi</th></tr></thead><tbody>
-            ${myGrades.map(g => `<tr><td>${subjects.find(s => s.id === g.subjectId)?.name}</td><td>${g.grade1}</td><td>${g.grade2}</td><td><strong>${g.final}</strong></td><td>${g.letter || '-'}</td></tr>`).join('')}
+            ${myGrades.map(g => `<tr><td>${subjects.find(s => s.id === g.subjectId)?.name}</td><td>${g.grade1}</td><td>${g.grade2}</td><td><strong>${g.final}</strong></td><td>${g.letter || '-'}</td>`).join('')}
             </tbody></table></div></div>`;
         }
 
@@ -954,7 +1019,7 @@
             const myGroup = groups.find(g => g.id === currentUser.groupId);
             const mySchedules = schedules.filter(s => s.groupId === currentUser.groupId).sort((a,b)=>a.dayNum - b.dayNum);
             document.getElementById('mainContent').innerHTML = `<div class="card"><h3>📅 ${t('mySchedule')} (${myGroup?.name})</h3><div class="table-wrapper"><table><thead><tr><th>Fan</th><th>Kun</th><th>Vaqt</th><th>Xona</th><th>O'qituvchi</th><th>Tur</th></tr></thead><tbody>
-            ${mySchedules.map(s => `<tr><td>${subjects.find(sub => sub.id === s.subjectId)?.name}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td><td>${teachers.find(t => t.id === (s.teacherId || subjects.find(sub=>sub.id===s.subjectId)?.teacherId))?.fullName || '-'}</td><td>${s.type || 'Ma\'ruza'}</td></tr>`).join('')}
+            ${mySchedules.map(s => `<tr><td>${subjects.find(sub => sub.id === s.subjectId)?.name}</td><td>${s.day}</td><td>${s.time}</td><td>${s.room}</td><td>${teachers.find(t => t.id === (s.teacherId || subjects.find(sub=>sub.id===s.subjectId)?.teacherId))?.fullName || '-'}</td><td>${s.type || 'Ma\'ruza'}</td>`).join('')}
             </tbody></table></div></div>`;
         }
 
@@ -966,48 +1031,49 @@
         function renderStudentPayments() {
             const myPayments = payments.filter(p => p.studentId === currentUser.id);
             document.getElementById('mainContent').innerHTML = `<div class="card"><h3>💰 ${t('myPayments')}</h3><div class="table-wrapper"><table><thead><tr><th>Summa</th><th>Sana</th><th>Tur</th><th>Holat</th></tr></thead><tbody>
-            ${myPayments.map(p => `<tr><td>${p.amount.toLocaleString()} so'm</td><td>${p.date}</td><td>${p.type}</td><td><span style="background:#10b981; padding:4px 12px; border-radius:20px;">${p.status}</span></td></tr>`).join('')}
+            ${myPayments.map(p => `<td>${p.amount.toLocaleString()} so'm</td><td>${p.date}</td><td>${p.type}</td><td><span style="background:#10b981; padding:4px 12px; border-radius:20px;">${p.status}</span></td>`).join('')}
             </tbody></table></div></div>`;
         }
 
-        // ==================== MODAL SYSTEM (TO'LIQ CRUD) ====================
+        // ==================== MODAL SYSTEM ====================
         function openModal(type, item = null) {
             currentModalType = type;
             currentEditItem = item;
             let html = '';
             
             if (type === 'student') {
-                html = `<div class="form-group"><label>ID *</label><input id="sId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="Masalan: ST001"></div>
+                const autoId = generateStudentId();
+                html = `<div class="form-group"><label>ID (Avtomatik)</label><input id="sId" value="${item?.id || autoId}" readonly style="background:#f0f0f0"></div>
                 <div class="form-group"><label>Ism Familiya *</label><input id="sName" value="${item?.fullName || ''}" placeholder="Alisher Karimov"></div>
                 <div class="form-row"><div class="form-group"><label>Fakultet</label><input id="sFaculty" value="${item?.faculty || ''}"></div>
                 <div class="form-group"><label>Guruh ID</label><input id="sGroup" value="${item?.groupId || ''}"></div></div>
-                <div class="form-row"><div class="form-group"><label>Kurs</label><input id="sCourse" value="${item?.course || ''}" type="number"></div>
+                <div class="form-row"><div class="form-group"><label>Kurs</label><input id="sCourse" value="${item?.course || 1}" type="number"></div>
                 <div class="form-group"><label>Telefon</label><input id="sPhone" value="${item?.phone || ''}"></div></div>
                 <div class="form-row"><div class="form-group"><label>Email</label><input id="sEmail" value="${item?.email || ''}"></div>
-                <div class="form-group"><label>Parol *</label><input id="sPassword" value="${item?.password || ''}" type="text"></div></div>
+                <div class="form-group"><label>Parol *</label><input id="sPassword" value="${item?.password || '12345'}" type="text"></div></div>
                 <div class="form-group"><label>Manzil</label><input id="sAddress" value="${item?.address || ''}"></div>`;
             } else if (type === 'teacher') {
-                html = `<div class="form-group"><label>ID *</label><input id="tId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="T001"></div>
+                html = `<div class="form-group"><label>ID *</label><input id="tId" value="${item?.id || 'T' + String(teachers.length+1).padStart(3,'0')}" ${item ? 'readonly' : ''} placeholder="T001"></div>
                 <div class="form-group"><label>Ism Familiya *</label><input id="tName" value="${item?.fullName || ''}"></div>
                 <div class="form-row"><div class="form-group"><label>Lavozimi</label><input id="tPosition" value="${item?.position || ''}"></div>
                 <div class="form-group"><label>Telefon</label><input id="tPhone" value="${item?.phone || ''}"></div></div>
                 <div class="form-row"><div class="form-group"><label>Email</label><input id="tEmail" value="${item?.email || ''}"></div>
-                <div class="form-group"><label>Parol</label><input id="tPassword" value="${item?.password || ''}" type="text"></div></div>`;
+                <div class="form-group"><label>Parol</label><input id="tPassword" value="${item?.password || '12345'}" type="text"></div></div>`;
             } else if (type === 'subject') {
-                html = `<div class="form-group"><label>ID *</label><input id="subId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="SUB001"></div>
+                html = `<div class="form-group"><label>ID *</label><input id="subId" value="${item?.id || 'SUB' + String(subjects.length+1).padStart(3,'0')}" ${item ? 'readonly' : ''} placeholder="SUB001"></div>
                 <div class="form-group"><label>Fan nomi *</label><input id="subName" value="${item?.name || ''}"></div>
                 <div class="form-row"><div class="form-group"><label>Kod</label><input id="subCode" value="${item?.code || ''}"></div>
                 <div class="form-group"><label>Kredit</label><input id="subCredits" value="${item?.credits || 3}" type="number"></div></div>
                 <div class="form-row"><div class="form-group"><label>Semestr</label><input id="subSemester" value="${item?.semester || 1}" type="number"></div>
                 <div class="form-group"><label>O'qituvchi</label><select id="subTeacher">${teachers.map(t => `<option value="${t.id}" ${item?.teacherId === t.id ? 'selected' : ''}>${t.fullName}</option>`).join('')}</select></div></div>`;
             } else if (type === 'group') {
-                html = `<div class="form-group"><label>ID *</label><input id="gId" value="${item?.id || ''}" ${item ? 'readonly' : ''} placeholder="GRP001"></div>
+                html = `<div class="form-group"><label>ID *</label><input id="gId" value="${item?.id || 'GRP' + String(groups.length+1).padStart(3,'0')}" ${item ? 'readonly' : ''} placeholder="GRP001"></div>
                 <div class="form-group"><label>Guruh nomi *</label><input id="gName" value="${item?.name || ''}"></div>
                 <div class="form-row"><div class="form-group"><label>Fakultet</label><input id="gFaculty" value="${item?.faculty || ''}"></div>
                 <div class="form-group"><label>Kurs</label><input id="gCourse" value="${item?.course || 1}" type="number"></div></div>
                 <div class="form-group"><label>Fanlar (ID vergul bilan)</label><input id="gSubjects" value="${(item?.subjectIds || []).join(',')}" placeholder="SUB001,SUB002"></div>`;
             } else if (type === 'grade') {
-                html = `<div class="form-group"><label>Talaba</label><select id="grStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName}</option>`).join('')}</select></div>
+                html = `<div class="form-group"><label>Talaba</label><select id="grStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName} (${s.id})</option>`).join('')}</select></div>
                 <div class="form-group"><label>Fan</label><select id="grSubject">${subjects.map(s => `<option value="${s.id}" ${item?.subjectId === s.id ? 'selected' : ''}>${s.name}</option>`).join('')}</select></div>
                 <div class="form-row"><div class="form-group"><label>1-baho</label><input id="gr1" value="${item?.grade1 || 0}" type="number" min="0" max="100"></div>
                 <div class="form-group"><label>2-baho</label><input id="gr2" value="${item?.grade2 || 0}" type="number" min="0" max="100"></div></div>
@@ -1015,25 +1081,25 @@
             } else if (type === 'schedule') {
                 html = `<div class="form-group"><label>Guruh</label><select id="schGroup">${groups.map(g => `<option value="${g.id}" ${item?.groupId === g.id ? 'selected' : ''}>${g.name}</option>`).join('')}</select></div>
                 <div class="form-group"><label>Fan</label><select id="schSubject">${subjects.map(s => `<option value="${s.id}" ${item?.subjectId === s.id ? 'selected' : ''}>${s.name}</option>`).join('')}</select></div>
-                <div class="form-row"><div class="form-group"><label>Kun</label><select id="schDay"><option>Dushanba</option><option>Seshanba</option><option>Chorshanba</option><option>Payshanba</option><option>Juma</option><option>Shanba</option></select></div>
+                <div class="form-row"><div class="form-group"><label>Kun</label><select id="schDay"><option ${item?.day === 'Dushanba' ? 'selected' : ''}>Dushanba</option><option ${item?.day === 'Seshanba' ? 'selected' : ''}>Seshanba</option><option ${item?.day === 'Chorshanba' ? 'selected' : ''}>Chorshanba</option><option ${item?.day === 'Payshanba' ? 'selected' : ''}>Payshanba</option><option ${item?.day === 'Juma' ? 'selected' : ''}>Juma</option><option ${item?.day === 'Shanba' ? 'selected' : ''}>Shanba</option></select></div>
                 <div class="form-group"><label>Vaqt</label><input id="schTime" value="${item?.time || '09:00-10:30'}" placeholder="09:00-10:30"></div></div>
                 <div class="form-row"><div class="form-group"><label>Xona</label><input id="schRoom" value="${item?.room || ''}"></div>
-                <div class="form-group"><label>Tur</label><select id="schType"><option>Ma\'ruza</option><option>Amaliyot</option><option>Laboratoriya</option></select></div></div>`;
+                <div class="form-group"><label>Tur</label><select id="schType"><option ${item?.type === 'Ma\'ruza' ? 'selected' : ''}>Ma\'ruza</option><option ${item?.type === 'Amaliyot' ? 'selected' : ''}>Amaliyot</option><option ${item?.type === 'Laboratoriya' ? 'selected' : ''}>Laboratoriya</option></select></div></div>`;
             } else if (type === 'contract') {
-                html = `<div class="form-group"><label>Talaba</label><select id="cStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName}</option>`).join('')}</select></div>
+                html = `<div class="form-group"><label>Talaba</label><select id="cStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName} (${s.id})</option>`).join('')}</select></div>
                 <div class="form-row"><div class="form-group"><label>Summa</label><input id="cAmount" value="${item?.amount || 0}" type="number"></div>
                 <div class="form-group"><label>To'langan</label><input id="cPaid" value="${item?.paid || 0}" type="number"></div></div>
                 <div class="form-row"><div class="form-group"><label>Sana</label><input id="cDate" value="${item?.date || new Date().toISOString().split('T')[0]}" type="date"></div>
-                <div class="form-group"><label>Holat</label><select id="cStatus"><option>to\'langan</option><option>qisman</option><option>qarz</option></select></div></div>`;
+                <div class="form-group"><label>Holat</label><select id="cStatus"><option ${item?.status === 'to\'langan' ? 'selected' : ''}>to\'langan</option><option ${item?.status === 'qisman' ? 'selected' : ''}>qisman</option><option ${item?.status === 'qarz' ? 'selected' : ''}>qarz</option></select></div></div>`;
             } else if (type === 'payment') {
-                html = `<div class="form-group"><label>Talaba</label><select id="pStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName}</option>`).join('')}</select></div>
+                html = `<div class="form-group"><label>Talaba</label><select id="pStudent">${students.map(s => `<option value="${s.id}" ${item?.studentId === s.id ? 'selected' : ''}>${s.fullName} (${s.id})</option>`).join('')}</select></div>
                 <div class="form-row"><div class="form-group"><label>Summa</label><input id="pAmount" value="${item?.amount || 0}" type="number"></div>
                 <div class="form-group"><label>Sana</label><input id="pDate" value="${item?.date || new Date().toISOString().split('T')[0]}" type="date"></div></div>
-                <div class="form-row"><div class="form-group"><label>Tur</label><select id="pType"><option>Kontrakt</option><option>Boshqa</option></select></div>
-                <div class="form-group"><label>Holat</label><select id="pStatus"><option>tasdiqlangan</option><option>kutilmoqda</option></select></div></div>`;
+                <div class="form-row"><div class="form-group"><label>Tur</label><select id="pType"><option ${item?.type === 'Kontrakt' ? 'selected' : ''}>Kontrakt</option><option ${item?.type === 'Boshqa' ? 'selected' : ''}>Boshqa</option></select></div>
+                <div class="form-group"><label>Holat</label><select id="pStatus"><option ${item?.status === 'tasdiqlangan' ? 'selected' : ''}>tasdiqlangan</option><option ${item?.status === 'kutilmoqda' ? 'selected' : ''}>kutilmoqda</option></select></div></div>`;
             }
             
-            document.getElementById('modalTitle').innerHTML = item ? `✏️ ${t('edit')} ${type}` : `➕ ${t('add')} ${type}`;
+            document.getElementById('modalTitle').innerHTML = item ? `✏️ ${t('edit')}` : `➕ ${t('add')}`;
             document.getElementById('modalBody').innerHTML = html;
             document.getElementById('modal').style.display = 'flex';
         }
@@ -1054,13 +1120,14 @@
                 if (currentEditItem) {
                     const index = students.findIndex(s => s.id === currentEditItem.id);
                     if (index !== -1) students[index] = data;
+                    showNotification('Talaba tahrirlandi');
                 } else {
                     if (students.find(s => s.id === data.id)) { showNotification('Bu ID allaqachon mavjud!', 'error'); return; }
                     students.push(data);
+                    showNotification(`Yangi talaba qo'shildi! ID: ${data.id}`);
                 }
                 saveData();
                 renderStudentsTable();
-                showNotification('Talaba saqlandi');
             } else if (currentModalType === 'teacher') {
                 const data = {
                     id: document.getElementById('tId').value,
@@ -1074,12 +1141,13 @@
                 if (currentEditItem) {
                     const index = teachers.findIndex(t => t.id === currentEditItem.id);
                     if (index !== -1) teachers[index] = data;
+                    showNotification('O\'qituvchi tahrirlandi');
                 } else {
                     teachers.push(data);
+                    showNotification('Yangi o\'qituvchi qo\'shildi');
                 }
                 saveData();
                 renderTeachersTable();
-                showNotification('O\'qituvchi saqlandi');
             } else if (currentModalType === 'subject') {
                 const data = {
                     id: document.getElementById('subId').value,
@@ -1092,12 +1160,13 @@
                 if (currentEditItem) {
                     const index = subjects.findIndex(s => s.id === currentEditItem.id);
                     if (index !== -1) subjects[index] = data;
+                    showNotification('Fan tahrirlandi');
                 } else {
                     subjects.push(data);
+                    showNotification('Yangi fan qo\'shildi');
                 }
                 saveData();
                 renderSubjectsTable();
-                showNotification('Fan saqlandi');
             } else if (currentModalType === 'group') {
                 const data = {
                     id: document.getElementById('gId').value,
@@ -1109,39 +1178,43 @@
                 if (currentEditItem) {
                     const index = groups.findIndex(g => g.id === currentEditItem.id);
                     if (index !== -1) groups[index] = data;
+                    showNotification('Guruh tahrirlandi');
                 } else {
                     groups.push(data);
+                    showNotification('Yangi guruh qo\'shildi');
                 }
                 saveData();
                 renderGroupsTable();
-                showNotification('Guruh saqlandi');
             } else if (currentModalType === 'grade') {
+                const final = parseInt(document.getElementById('grFinal').value) || 0;
                 const data = {
                     id: currentEditItem?.id || 'GRD' + Date.now(),
                     studentId: document.getElementById('grStudent').value,
                     subjectId: document.getElementById('grSubject').value,
                     grade1: parseInt(document.getElementById('gr1').value) || 0,
                     grade2: parseInt(document.getElementById('gr2').value) || 0,
-                    final: parseInt(document.getElementById('grFinal').value) || 0,
-                    total: parseInt(document.getElementById('grFinal').value) || 0,
-                    letter: getLetterGrade(parseInt(document.getElementById('grFinal').value) || 0)
+                    final: final,
+                    total: final,
+                    letter: getLetterGrade(final)
                 };
                 if (currentEditItem) {
                     const index = grades.findIndex(g => g.id === currentEditItem.id);
                     if (index !== -1) grades[index] = data;
+                    showNotification('Baho tahrirlandi');
                 } else {
                     grades.push(data);
+                    showNotification('Yangi baho qo\'shildi');
                 }
                 saveData();
                 renderGradesTable();
-                showNotification('Baho saqlandi');
             } else if (currentModalType === 'schedule') {
+                const day = document.getElementById('schDay').value;
                 const data = {
                     id: currentEditItem?.id || 'SCH' + Date.now(),
                     groupId: document.getElementById('schGroup').value,
                     subjectId: document.getElementById('schSubject').value,
-                    day: document.getElementById('schDay').value,
-                    dayNum: getDayNum(document.getElementById('schDay').value),
+                    day: day,
+                    dayNum: getDayNum(day),
                     time: document.getElementById('schTime').value,
                     room: document.getElementById('schRoom').value,
                     type: document.getElementById('schType').value,
@@ -1150,12 +1223,13 @@
                 if (currentEditItem) {
                     const index = schedules.findIndex(s => s.id === currentEditItem.id);
                     if (index !== -1) schedules[index] = data;
+                    showNotification('Dars jadvali tahrirlandi');
                 } else {
                     schedules.push(data);
+                    showNotification('Yangi dars qo\'shildi');
                 }
                 saveData();
                 renderScheduleTable();
-                showNotification('Dars jadvali saqlandi');
             } else if (currentModalType === 'contract') {
                 const amount = parseInt(document.getElementById('cAmount').value) || 0;
                 const paid = parseInt(document.getElementById('cPaid').value) || 0;
@@ -1171,12 +1245,13 @@
                 if (currentEditItem) {
                     const index = contracts.findIndex(c => c.id === currentEditItem.id);
                     if (index !== -1) contracts[index] = data;
+                    showNotification('Shartnoma tahrirlandi');
                 } else {
                     contracts.push(data);
+                    showNotification('Yangi shartnoma qo\'shildi');
                 }
                 saveData();
                 renderContractsTable();
-                showNotification('Shartnoma saqlandi');
             } else if (currentModalType === 'payment') {
                 const data = {
                     id: currentEditItem?.id || 'PAY' + Date.now(),
@@ -1189,12 +1264,13 @@
                 if (currentEditItem) {
                     const index = payments.findIndex(p => p.id === currentEditItem.id);
                     if (index !== -1) payments[index] = data;
+                    showNotification('To\'lov tahrirlandi');
                 } else {
                     payments.push(data);
+                    showNotification('Yangi to\'lov qo\'shildi');
                 }
                 saveData();
                 renderPaymentsTable();
-                showNotification('To\'lov saqlandi');
             }
             closeModal();
         }
